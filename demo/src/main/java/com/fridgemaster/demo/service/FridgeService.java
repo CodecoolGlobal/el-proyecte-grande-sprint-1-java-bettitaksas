@@ -10,7 +10,7 @@ public interface FridgeService {
 
     List<Item> getFridgeContents(UUID fridgeId);
 
-    boolean addItem(UUID fridgeId,Item item);
-    boolean deleteItem(UUID fridgeId, Item item);
-    boolean useRecipe(UUID fridgeId, Recipe recipe);
+    void addItem(UUID fridgeId,Item item);
+    void deleteItem(UUID fridgeId, Item item);
+    void useRecipe(UUID fridgeId, Recipe recipe);
 }

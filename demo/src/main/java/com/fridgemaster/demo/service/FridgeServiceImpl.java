@@ -20,28 +20,24 @@ public class FridgeServiceImpl implements FridgeService{
 
     @Override
     public List<Item> getFridgeContents(UUID id) {
-        return null;
-        //fridgeRepository.getFridgeContent(id);
+        return fridgeRepository.getFridgeItem(id);
     }
 
     @Override
-    public boolean addItem(UUID fridgeId, Item item) {
-        return false;
-              //  fridgeRepository.addItem(fridgeId, item);
+    public void addItem(UUID fridgeId, Item item) {
+         fridgeRepository.addItemToFridge(fridgeId, item);
     }
 
     @Override
-    public boolean deleteItem(UUID fridgeId, Item item) {
-        return false;
-                //fridgeRepository.consumeItem(fridgeId, item);
+    public void deleteItem(UUID fridgeId, Item item) {
+        fridgeRepository.deleteItemFromFridge(fridgeId, item);
     }
 
     @Override
-    public boolean useRecipe(UUID fridgeId, Recipe recipe) {
-        return false;
-        // for(Item ingredient : recipe.ingredients()){
-        // fridgeRepository.consumeItem(fridgeId, ingredient)
-        // }
+    public void useRecipe(UUID fridgeId, Recipe recipe) {
+        for(Item ingredient : recipe.getIngredients()){
+            fridgeRepository.deleteItemFromFridge(fridgeId, ingredient);
+        }
     }
 
 
