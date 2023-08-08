@@ -1,7 +1,8 @@
 package com.fridgemaster.demo.service;
-
+import com.fridgemaster.demo.model.FridgeRepository;
 import com.fridgemaster.demo.model.Item;
 import com.fridgemaster.demo.model.Recipe;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,24 +10,33 @@ import java.util.UUID;
 
 @Service
 public class FridgeServiceImpl implements FridgeService{
+
+    FridgeRepository fridgeRepository;
+    @Autowired
+    public FridgeServiceImpl(FridgeRepository fridgeRepository) {
+        this.fridgeRepository = fridgeRepository;
+    }
+
     @Override
     public List<Item> getFridgeContents(UUID id) {
-        return null;
+        return fridgeRepository.getFridgeItem(id);
     }
 
     @Override
-    public boolean addItem(UUID fridgeId, Item item) {
-        return false;
+    public void addItem(UUID fridgeId, Item item) {
+         fridgeRepository.addItemToFridge(fridgeId, item);
     }
 
     @Override
-    public boolean consumeItem(UUID fridgeId, Item item) {
-        return false;
+    public void deleteItem(UUID fridgeId, Item item) {
+        fridgeRepository.deleteItemFromFridge(fridgeId, item);
     }
 
     @Override
-    public boolean useRecipe(Recipe recipe) {
-        return false;
+    public void useRecipe(UUID fridgeId, Recipe recipe) {
+        for(Item ingredient : recipe.getIngredients()){
+            fridgeRepository.deleteItemFromFridge(fridgeId, ingredient);
+        }
     }
 
     @Override

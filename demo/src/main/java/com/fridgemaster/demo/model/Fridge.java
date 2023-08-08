@@ -6,26 +6,27 @@ import java.util.UUID;
 
 public class Fridge {
     private UUID id;
-    List<Item> fridgeContent;
+    List<Item> fridgeItems;
 
     public Fridge() {
         id = UUID.randomUUID();
-        fridgeContent = new ArrayList<>();
+        fridgeItems = new ArrayList<>();
     }
 
     public UUID getId() {
         return id;
     }
 
-    public List<Item> getFridgeContent() {
-        return fridgeContent;
+    public List<Item> getFridgeItems() {
+        return fridgeItems;
     }
 
-    public void addContentToFridge(Item item){
-        fridgeContent.add(item);
+    public void addItemToFridge(Item item){
+        fridgeItems.add(item);
     }
-    public void removeContentFromFridge(UUID id){
-        fridgeContent.removeIf(c -> c.getId().equals(id));
+    public void deleteItemFromFridge(Item item){
+        UUID itemId = item.getId();
+        fridgeItems.removeIf(c -> c.getId().equals(itemId));
     }
 
 

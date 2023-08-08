@@ -1,5 +1,4 @@
 package com.fridgemaster.demo.model;
-
 import java.util.ArrayList;
 import java.util.List;
 
