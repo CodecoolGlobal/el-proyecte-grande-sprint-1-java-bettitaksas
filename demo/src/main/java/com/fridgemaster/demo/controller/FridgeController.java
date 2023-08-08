@@ -19,13 +19,11 @@ public class FridgeController {
         this.fridgeService = fridgeService;
     }
 
-
     @GetMapping("/{id}")
     public List<Item> getAllItemFromFridgeById(@PathVariable UUID id){
         return fridgeService.getFridgeContents(id);
     }
 
-    //????????
     @PostMapping
     public void addNewItem(@PathVariable UUID fridgeId, @RequestBody Item item) {
         fridgeService.addItem(fridgeId, item);
