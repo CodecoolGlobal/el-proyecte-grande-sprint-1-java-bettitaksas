@@ -5,16 +5,16 @@ import java.util.UUID;
 
 public final class Item {
     private UUID id;
-    private String name;
-    private int weight;
-    private double cal;
+    private ItemType type;
+    //private int weight;
+    //private double cal;
     private LocalDate expirationDate;
 
-    public Item( String name, int weight, double cal, LocalDate expirationDate) {
+    public Item( ItemType itemType, LocalDate expirationDate) {
         this.id = UUID.randomUUID();
-        this.name = name;
-        this.weight = weight;
-        this.cal = cal;
+        this.type = itemType;
+        //this.weight = weight;
+        //this.cal = cal;
         this.expirationDate = expirationDate;
     }
 
@@ -22,17 +22,17 @@ public final class Item {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public ItemType getType() {
+        return type;
     }
 
-    public int getWeight() {
+/*    public int getWeight() {
         return weight;
     }
 
     public double getCal() {
         return cal;
-    }
+    }*/
 
     public LocalDate getExpirationDate() {
         return expirationDate;

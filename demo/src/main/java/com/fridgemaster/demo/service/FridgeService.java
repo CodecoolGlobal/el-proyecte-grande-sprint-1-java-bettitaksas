@@ -9,7 +9,6 @@ import java.util.UUID;
 public interface FridgeService {
 
     List<Item> getFridgeContents(UUID fridgeId);
-
     void addItem(UUID fridgeId,Item item);
     void deleteItem(UUID fridgeId, Item item);
     void useRecipe(UUID fridgeId, Recipe recipe);

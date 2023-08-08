@@ -1,5 +1,4 @@
 package com.fridgemaster.demo.service;
-
 import com.fridgemaster.demo.model.FridgeRepository;
 import com.fridgemaster.demo.model.Item;
 import com.fridgemaster.demo.model.Recipe;
@@ -38,6 +37,11 @@ public class FridgeServiceImpl implements FridgeService{
         for(Item ingredient : recipe.getIngredients()){
             fridgeRepository.deleteItemFromFridge(fridgeId, ingredient);
         }
+    }
+
+    @Override
+    public void deleteItem(UUID fridgeId, UUID itemId) {
+
     }
 
 
