@@ -1,5 +1,6 @@
 package com.fridgemaster.demo.controller;
 
+import com.fridgemaster.demo.model.Fridge;
 import com.fridgemaster.demo.model.Item;
 import com.fridgemaster.demo.service.FridgeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/fridge")
+@RequestMapping("/fridges")
 public class FridgeController {
 
     private final FridgeService fridgeService;
@@ -19,9 +20,14 @@ public class FridgeController {
         this.fridgeService = fridgeService;
     }
 
+    @GetMapping("")
+    public List<Fridge> getFridges(){
+     return fridgeService.getFridges();
+    }
+
     @GetMapping("/{id}")
     public List<Item> getAllItemFromFridgeById(@PathVariable UUID id){
-        return fridgeService.getFridgeContents(id);
+        return fridgeService.getFridgeItems(id);
     }
 
     @PostMapping

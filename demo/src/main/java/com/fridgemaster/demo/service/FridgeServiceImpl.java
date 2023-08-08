@@ -1,4 +1,5 @@
 package com.fridgemaster.demo.service;
+import com.fridgemaster.demo.model.Fridge;
 import com.fridgemaster.demo.model.FridgeRepository;
 import com.fridgemaster.demo.model.Item;
 import com.fridgemaster.demo.model.Recipe;
@@ -17,8 +18,12 @@ public class FridgeServiceImpl implements FridgeService{
         this.fridgeRepository = fridgeRepository;
     }
 
+    public List<Fridge> getFridges(){
+        return fridgeRepository.getFridges();
+    }
+
     @Override
-    public List<Item> getFridgeContents(UUID id) {
+    public List<Item> getFridgeItems(UUID id) {
         return fridgeRepository.getFridgeItem(id);
     }
 
@@ -28,20 +33,15 @@ public class FridgeServiceImpl implements FridgeService{
     }
 
     @Override
-    public void deleteItem(UUID fridgeId, Item item) {
-        fridgeRepository.deleteItemFromFridge(fridgeId, item);
+    public void deleteItem(UUID fridgeId, UUID itemId) {
+        fridgeRepository.deleteItemFromFridge(fridgeId, itemId);
     }
 
     @Override
     public void useRecipe(UUID fridgeId, Recipe recipe) {
         for(Item ingredient : recipe.getIngredients()){
-            fridgeRepository.deleteItemFromFridge(fridgeId, ingredient);
+            fridgeRepository.deleteItemFromFridge(fridgeId, ingredient.getId());
         }
-    }
-
-    @Override
-    public void deleteItem(UUID fridgeId, UUID itemId) {
-
     }
 
 
