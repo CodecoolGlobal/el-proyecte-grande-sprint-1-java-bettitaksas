@@ -18,6 +18,11 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    public List<Recipe> getAllRecipes() {
+        return recipeRepository.getAllRecipes();
+    }
+
+    @Override
     public List<Recipe> getRecipesMatchingWithItem(UUID itemId) {
         return recipeRepository.getRecipesMatchingWithItem(itemId);
     }

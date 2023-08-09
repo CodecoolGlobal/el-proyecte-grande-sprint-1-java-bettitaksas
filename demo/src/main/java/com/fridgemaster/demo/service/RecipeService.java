@@ -6,5 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface RecipeService {
+    List<Recipe> getAllRecipes();
+
     List<Recipe> getRecipesMatchingWithItem(UUID itemId);
 }
