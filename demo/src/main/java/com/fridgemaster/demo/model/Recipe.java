@@ -5,8 +5,8 @@ import java.util.List;
 public class Recipe {
     private List<Item> ingredients;
 
-    public Recipe(List<Item> ingredients) {
-        this.ingredients = ingredients;
+    public Recipe() {
+        this.ingredients = new ArrayList<>();
     }
 
     public List<Item> getIngredients() {
