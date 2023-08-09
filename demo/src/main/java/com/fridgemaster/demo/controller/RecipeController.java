@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.rmi.NoSuchObjectException;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,7 +22,7 @@ public class RecipeController {
     }
 
     @GetMapping("/{itemId}")
-    public Recipe getFirstRecipeMatchingWithItem(@PathVariable UUID itemId) throws NoSuchObjectException {
-        return recipeService.getFirstRecipeMatchingWithItem(itemId);
+    public List<Recipe> getRecipesMatchingWithItem(@PathVariable UUID itemId) {
+        return recipeService.getRecipesMatchingWithItem(itemId);
     }
 }
