@@ -24,9 +24,8 @@ public class Fridge {
     public void addItemToFridge(Item item){
         fridgeItems.add(item);
     }
-    public void deleteItemFromFridge(Item item){
-        UUID itemId = item.getId();
-        fridgeItems.removeIf(c -> c.getId().equals(itemId));
+    public void deleteItemFromFridge(UUID id){
+        fridgeItems.removeIf(c -> c.getId().equals(id));
     }
 
 
