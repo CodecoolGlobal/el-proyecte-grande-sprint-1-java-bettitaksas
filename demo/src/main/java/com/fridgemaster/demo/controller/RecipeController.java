@@ -12,13 +12,18 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/recipe")
+@RequestMapping("/recipes")
 public class RecipeController {
     private final RecipeService recipeService;
 
     @Autowired
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
+    }
+
+    @GetMapping
+    public List<Recipe> getAllRecipes() {
+        return recipeService.getAllRecipes();
     }
 
     @GetMapping("/{itemId}")
