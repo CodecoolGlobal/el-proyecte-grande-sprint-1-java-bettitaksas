@@ -38,11 +38,4 @@ public class FridgeServiceImpl implements FridgeService{
             fridgeRepository.deleteItemFromFridge(fridgeId, ingredient);
         }
     }
-
-    @Override
-    public void deleteItem(UUID fridgeId, UUID itemId) {
-
-    }
-
-
 }
