@@ -18,6 +18,10 @@ public final class Item {
         this.expirationDate = expirationDate;
     }
 
+    public Item(ItemType itemType) {
+        this.type = itemType;
+    }
+
     public UUID getId() {
         return id;
     }

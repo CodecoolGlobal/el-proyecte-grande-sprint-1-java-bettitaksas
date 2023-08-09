@@ -37,5 +37,11 @@ public enum ItemType {
     @JsonValue
     BROCCOLI,
     @JsonValue
-    CARROT
+    CARROT,
+    @JsonValue
+    ONION,
+    @JsonValue
+    CUCUMBER,
+    @JsonValue
+    GARLIC
 }
