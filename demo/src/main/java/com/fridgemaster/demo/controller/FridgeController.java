@@ -42,9 +42,9 @@ public class FridgeController {
         fridgeService.updateItem(itemId, updatedItem.getQuantity(), updatedItem.get...());
     }*/
 
-    @DeleteMapping("/{item}")
-    public void deleteItem(@PathVariable UUID fridgeId, @PathVariable Item item){
-        fridgeService.deleteItem(fridgeId, item);
+    @DeleteMapping("{fridgeId}/{itemId}")
+    public void deleteItem(@PathVariable UUID fridgeId, @PathVariable UUID itemId){
+        fridgeService.deleteItem(fridgeId, itemId);
     }
 
 }
