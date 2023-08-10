@@ -8,7 +8,7 @@ import java.util.UUID;
 public interface RecipeService {
     List<Recipe> getAllRecipes();
 
-    List<Recipe> getRecipesMatchingWithItem(UUID itemId);
+    Recipe getRecipeUsingWorstConditionItem(UUID fridgeId);
 
     Recipe recommendRecipe(UUID fridgeId);
 }
