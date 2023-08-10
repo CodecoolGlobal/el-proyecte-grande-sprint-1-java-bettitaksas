@@ -4,7 +4,7 @@ function Fridges() {
   const [fridgeContents, setFridgeContents] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/fridges`)
+    fetch(`http://localhost:3001/api/fridges`)
       .then((res) => res.json())
       .then((fridgeData) => setFridgeContents(fridgeData));
   }, []);

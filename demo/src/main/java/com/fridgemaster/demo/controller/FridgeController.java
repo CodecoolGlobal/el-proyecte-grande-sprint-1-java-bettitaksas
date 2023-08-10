@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/fridges")
+@RequestMapping("/api/fridges")
 public class FridgeController {
 
     private final FridgeService fridgeService;
@@ -34,6 +34,10 @@ public class FridgeController {
     public void addNewItem(@PathVariable UUID fridgeId, @RequestBody Item item) {
         System.out.println(item.toString());
         fridgeService.addItem(fridgeId, item);
+    }
+    @PostMapping("/")
+    public void startNewFridge(){
+        fridgeService.startNewFridge();
     }
 
     //put - pl. mennyiség fele elfogy

@@ -15,4 +15,5 @@ public interface FridgeService {
     void addItem(UUID fridgeId,Item item);
     void deleteItem(UUID fridgeId, UUID itemId);
     void useRecipe(UUID fridgeId, Recipe recipe);
+    void startNewFridge();
 }

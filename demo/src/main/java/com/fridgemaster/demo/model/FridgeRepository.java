@@ -12,6 +12,15 @@ public class FridgeRepository {
 
     public FridgeRepository() {
         this.fridges = new ArrayList<>();
+        Fridge fridge = new Fridge();
+        fridges.add(fridge);
+        System.out.println(fridge.getId());
+    }
+
+    public void startNewFridge(){
+        Fridge fridge = new Fridge();
+        fridges.add(fridge);
+        System.out.println(fridge.getId());
     }
 
     public List<Item> getFridgeItem(UUID id){
