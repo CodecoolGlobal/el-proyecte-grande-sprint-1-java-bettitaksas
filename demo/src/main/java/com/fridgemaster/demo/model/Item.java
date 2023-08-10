@@ -1,6 +1,7 @@
 package com.fridgemaster.demo.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 public final class Item {
@@ -40,5 +41,22 @@ public final class Item {
 
     public LocalDate getExpirationDate() {
         return expirationDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", type=" + type +
+                ", expirationDate=" + expirationDate +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return type == item.type;
     }
 }

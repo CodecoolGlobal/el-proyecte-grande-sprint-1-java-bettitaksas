@@ -4,10 +4,12 @@ function Header() {
     <>
       <div className="header">
         <Link to="/" className="title">
-          Fridge Masters
+          Fridge Master
         </Link>
         <nav className="navLinks">
           <Link to="/">Home</Link>
+          <Link to="/recipes">Recipes</Link>
+          <Link to="/login">Login</Link>
           <Link to="/fridges">My Fridges</Link>
         </nav>
       </div>

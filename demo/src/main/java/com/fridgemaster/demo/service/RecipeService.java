@@ -9,4 +9,6 @@ public interface RecipeService {
     List<Recipe> getAllRecipes();
 
     List<Recipe> getRecipesMatchingWithItem(UUID itemId);
+
+    Recipe recommendRecipe(UUID fridgeId);
 }

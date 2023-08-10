@@ -9,21 +9,31 @@ import ErrorElement from "./Components/ErrorElement";
 import Fridges from "./Components/Fridges";
 import Login from "./Components/Login";
 import MainPage from "./Components/MainPage";
+import Recipes from "./Components/Recipes";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Header />,
     errorElement: <ErrorElement />,
+    
     children: [
+      {
+        path: "/",
+        element: <MainPage />,
+      },
       {
         path: "/fridges",
         element: <Fridges />,
       },
       {
-        path: "/",
+        path: "/login",
         element: <Login />,
       },
+      {
+        path: "/recipes",
+        element: <Recipes/>
+      }
     ],
   },
 ]);
