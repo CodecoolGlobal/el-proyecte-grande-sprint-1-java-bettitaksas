@@ -35,12 +35,23 @@ public class RecipeServiceImpl implements RecipeService {
         List<Item> items = fridgeService.getFridgeItems(fridgeId);
         List<Recipe> recipeList = new ArrayList<>(recipeRepository.getAllRecipes());
         List<Item> itemsClone = new ArrayList<>(items);
-       /* Collections.sort(recipeList, (o1, o2) -> o2.getIngredients().stream().filter(items::contains).collect(Collectors.toList()).size() -
-                o1.getIngredients().stream().filter(items::contains).collect(Collectors.toList()).size()); */
-        Collections.sort(recipeList, (o2, o1) ->
-                itemsClone.stream().filter(item -> o2.getIngredients().contains(item)).collect(Collectors.toList()).size() -
-                itemsClone.stream().filter(item -> o1.getIngredients().contains(item)).collect(Collectors.toList()).size());
 
+        Collections.sort(recipeList, (o1,o2)-> {
+            int requiredItemCountO1 = 0;
+            int requiredItemCountO2 = 0;
+            for(Item item : o1.getIngredients()){
+                if(!items.contains(item)){
+                    requiredItemCountO1++;
+                }
+            }
+            for(Item item : o2.getIngredients()){
+                if(!items.contains(item)){
+                    requiredItemCountO2++;
+                }
+            }
+
+            return requiredItemCountO1 - requiredItemCountO2;
+        });
         return recipeList.get(0);
     }
 
