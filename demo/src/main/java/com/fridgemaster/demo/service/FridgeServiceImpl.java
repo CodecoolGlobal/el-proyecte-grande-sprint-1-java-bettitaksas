@@ -43,4 +43,8 @@ public class FridgeServiceImpl implements FridgeService{
             fridgeRepository.deleteItemFromFridge(fridgeId, ingredient.getId());
         }
     }
+    @Override
+    public void startNewFridge(){
+        fridgeRepository.startNewFridge();
+    }
 }
