@@ -20,11 +20,11 @@ public class RecipeRepository {
         return recipes;
     }
 
-    public List<Recipe> getRecipesMatchingWithItem(UUID itemId) {
+/*    public List<Recipe> getRecipesMatchingWithItem(UUID itemId) {
         return recipes.stream()
                 .filter(recipe -> recipe.getIngredients().stream().anyMatch(ingredient -> ingredient.getId().equals(itemId)))
                 .collect(Collectors.toList());
-    }
+    }*/
 
     @PostConstruct
     private void init(){

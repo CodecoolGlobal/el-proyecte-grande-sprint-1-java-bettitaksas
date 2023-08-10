@@ -26,12 +26,13 @@ public class RecipeController {
         return recipeService.getAllRecipes();
     }
 
-    @GetMapping("/{itemId}")
-    public List<Recipe> getRecipesMatchingWithItem(@PathVariable UUID itemId) {
-        return recipeService.getRecipesMatchingWithItem(itemId);
-    }
+/*    @GetMapping("/{itemId}")
+    public Recipe getRecipesMatchingWithItem(@PathVariable UUID itemId) {
+        return recipeService.getRecipeUsingWorstConditionItem(itemId);
+    }*/
     @GetMapping("/recommendation/{fridgeId}")
     public Recipe recommendRecipe(@PathVariable UUID fridgeId){
-        return recipeService.recommendRecipe(fridgeId);
+        //return recipeService.recommendRecipe(fridgeId);
+        return recipeService.getRecipeUsingWorstConditionItem(fridgeId);
     }
 }

@@ -1,6 +1,7 @@
 package com.fridgemaster.demo.service;
 
 import com.fridgemaster.demo.model.Item;
+import com.fridgemaster.demo.model.ItemType;
 import com.fridgemaster.demo.model.Recipe;
 import com.fridgemaster.demo.model.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,21 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> getRecipesMatchingWithItem(UUID itemId) {
-        return recipeRepository.getRecipesMatchingWithItem(itemId);
+    public Recipe getRecipeUsingWorstConditionItem(UUID fridgeId) {
+        //return recipeRepository.getRecipesMatchingWithItem(itemId);
+        List<Item> items = fridgeService.getFridgeItems(fridgeId);
+
+        Optional<Item> worstConditionItem = items.stream()
+                .min(Comparator.comparing(Item::getExpirationDate));
+
+        ItemType type;
+        if (worstConditionItem.isPresent()){
+            type = worstConditionItem.get().getType();
+            return recipeRepository.getAllRecipes().stream()
+                    .filter(recipe -> recipe.getIngredients().stream()
+                            .anyMatch(ingredient -> ingredient.getType().equals(type)))
+                    .findAny().get();
+        } return null;
     }
 
     @Override
@@ -39,7 +53,7 @@ public class RecipeServiceImpl implements RecipeService {
                 o1.getIngredients().stream().filter(items::contains).collect(Collectors.toList()).size()); */
         Collections.sort(recipeList, (o2, o1) ->
                 itemsClone.stream().filter(item -> o2.getIngredients().contains(item)).collect(Collectors.toList()).size() -
-                itemsClone.stream().filter(item -> o1.getIngredients().contains(item)).collect(Collectors.toList()).size());
+                        itemsClone.stream().filter(item -> o1.getIngredients().contains(item)).collect(Collectors.toList()).size());
 
         return recipeList.get(0);
     }
