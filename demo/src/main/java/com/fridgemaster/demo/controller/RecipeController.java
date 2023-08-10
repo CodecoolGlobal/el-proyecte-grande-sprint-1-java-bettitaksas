@@ -30,4 +30,8 @@ public class RecipeController {
     public List<Recipe> getRecipesMatchingWithItem(@PathVariable UUID itemId) {
         return recipeService.getRecipesMatchingWithItem(itemId);
     }
+    @GetMapping("/recommendation/{fridgeId}")
+    public Recipe recommendRecipe(@PathVariable UUID fridgeId){
+        return recipeService.recommendRecipe(fridgeId);
+    }
 }

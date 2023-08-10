@@ -1,3 +1,9 @@
+body {
+  font-family: var(--font-family-sans-serif);
+  --font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+
 .App {
   text-align: center;
 }
@@ -14,31 +20,82 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #65dafb;
 }
-
 .header {
-  background-color: #333;
+  background-color: rgba(42, 78, 70, 0.773);
   color: #fff;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items:center; 
 }
 
 .title {
   font-size: 1.5rem;
+  color: #fff;
+}
+.title:hover{
+  color: #a9a0a0;
+  text-decoration: none;
 }
 
 .navLinks a {
-  color: #fff;
+  color: #ffffff;
   text-decoration: none;
-  margin-left: 1rem;
+  margin: 1.5rem;
 }
 
 .navLinks a:hover {
-  text-decoration: underline;
+  color:#a9a0a0
 }
+
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:radial-gradient(#81DAC4, #CCB3D0);
+  /* background-image: url("https://img.freepik.com/premium-photo/food-cooking-background-stone-texture-with-sea-salt-pepper-garlic-parsley-light-grey-abstract-food-background-empty-space-text-can-be-used-food-posters-design-menu-top-view_253362-16400.jpg?w=2000"); */
+  width: 100%; /* 100% of viewport width */
+  height: 100vh; /* 100% of viewport height */
+
+}
+
+.fridge-picture {
+  width: 73%;
+  height: 73%;
+  border: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("https://www.alphafoodie.com/wp-content/uploads/2022/06/Fridge-Organization-Middle-shelf-arrangement-with-dairy.jpeg");
+  border-radius: 10px; 
+  margin-top: 100px;
+}
+
+.description {
+  width: 70%;
+  background-color:white;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+
+ .description .left-text{
+  width: 41%;
+  height: 100%;
+  padding: 25px 25px;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 25px;
+}
+.description .right-description{
+  width: 59%;
+  height: 100%  
+}
+
+
 
 
 
@@ -49,4 +106,128 @@
   to {
     transform: rotate(360deg);
   }
+}
+img{
+	width: 100%;
+}
+.login {
+    height: 800px;
+    width: 100%;
+    background:radial-gradient(#81DAC4, #CCB3D0);
+    position: relative;
+}
+.login_box {
+    width: 1050px;
+    height: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 1px 4px 22px -8px #0004;
+    display: flex;
+    overflow: hidden;
+}
+.login_box .left{
+  width: 41%;
+  height: 100%;
+  padding: 25px 25px;
+  
+}
+.login_box .right{
+  width: 59%;
+  height: 100%  
+}
+.left .top_link a {
+    color: #452A5A;
+    font-weight: 400;
+}
+.left .top_link{
+  height: 20px
+}
+.left .contact{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    height: 100%;
+    width: 73%;
+    margin: auto;
+}
+.left h3{
+  text-align: center;
+  margin-bottom: 40px;
+}
+.left input {
+    border: none;
+    width: 80%;
+    margin: 15px 0px;
+    border-bottom: 1px solid #4f30677d;
+    padding: 7px 9px;
+    width: 100%;
+    overflow: hidden;
+    background: transparent;
+    font-weight: 600;
+    font-size: 14px;
+}
+.left{
+	background: linear-gradient(-45deg, #c0b9c7, #fff);
+}
+.submit {
+    border: none;
+    padding: 15px 70px;
+    border-radius: 8px;
+    display: block;
+    margin: auto;
+    margin-top: 120px;
+    background: #48716773;
+    color: #fff;
+    font-weight: bold;
+    -webkit-box-shadow: 0px 9px 15px -11px rgba(88,54,114,1);
+    -moz-box-shadow: 0px 9px 15px -11px rgba(88,54,114,1);
+    box-shadow: 0px 9px 15px -11px rgba(88,54,114,1);
+}
+
+
+
+.right {
+	background: linear-gradient(212.38deg, rgba(129, 218, 196, 0.3) 0%, rgba(204, 179, 208, 0.71) 100%),url(https://img.freepik.com/free-photo/medium-shot-woman-checking-fridge-night_23-2150301909.jpg?w=996&t=st=1691655484~exp=1691656084~hmac=263105e64a5558c01805e36f7bb85d837d3743e2f92a8d2a936d85d8c16f1431);
+	color: #fff;
+	position: relative;
+}
+
+.right .right-text{
+  height: 100%;
+  position: relative;
+  transform: translate(0%, 45%);
+}
+.right-text h2{
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 50px;
+  font-weight: 500;
+}
+.right-text h5{
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.right .right-inductor{
+  position: absolute;
+  width: 70px;
+  height: 7px;
+  background: #fff0;
+  left: 50%;
+  bottom: 70px;
+  transform: translate(-50%, 0%);
+}
+.top_link img {
+    width: 28px;
+    padding-right: 7px;
+    margin-top: -3px;
 }

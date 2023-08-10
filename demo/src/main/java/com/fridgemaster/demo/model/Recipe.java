@@ -32,4 +32,11 @@ public class Recipe {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
