@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 function Fridges() {
+  let DOMAIN_NAME = "http://localhost:3001"
   const [fridgeContents, setFridgeContents] = useState(null);
   const [itemTypes, setItemTypes] = useState(null);
   const [itemSelected, setItemSelected] = useState(null);
@@ -8,8 +9,8 @@ function Fridges() {
 
   function fetchKitchenInfo() {
     let fetchReqs = [
-      fetch(`http://localhost:3001/api/items`).then((res) => res.json()),
-      fetch(`http://localhost:3001/api/fridges`).then((res) => res.json()),
+      fetch(`${DOMAIN_NAME}/api/items`).then((res) => res.json()),
+      fetch(`${DOMAIN_NAME}/api/fridges`).then((res) => res.json()),
     ];
     return Promise.all(fetchReqs);
   }
