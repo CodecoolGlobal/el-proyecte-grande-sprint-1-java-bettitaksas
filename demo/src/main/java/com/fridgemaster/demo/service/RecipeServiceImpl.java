@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+//TODO query methods need to be in repository class
 @Service
 public class RecipeServiceImpl implements RecipeService {
     RecipeRepository recipeRepository;

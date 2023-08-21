@@ -5,7 +5,7 @@ function Recipes() {
   const [update, setUpdate] = useState(0);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/recipes`)
+    fetch(`/api/recipes`)
       .then((res) => res.json())
       .then((data) => setRecipes(data));
   }, [update]);
