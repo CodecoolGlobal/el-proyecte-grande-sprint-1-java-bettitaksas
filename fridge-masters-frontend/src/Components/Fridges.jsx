@@ -7,7 +7,7 @@ function Fridges() {
   const [recommendedRecipe, setRecommendedRecipe] = useState(null);
 
 function fetchInfo(){
-  let fetchReqs = [fetch(`http://localhost:3001/api/items`).then(res => res.json()), fetch(`http://localhost:3001/api/fridges`).then(res => res.json())]
+  let fetchReqs = [fetch(`/api/items`).then(res => res.json()), fetch(`/api/fridges`).then(res => res.json())]
   return Promise.all(fetchReqs)
 }
   useEffect(() => {
@@ -19,19 +19,19 @@ function fetchInfo(){
   }, []);
 
   function addHandler(fridgeId, itemSelected){
-    fetch(`http://localhost:3001/api/fridges/${fridgeId}`, {
+    fetch(`/api/fridges/${fridgeId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({"itemType": itemSelected, "expirationDate": "2023-11-11" }),
+    body: JSON.stringify({"itemType": itemSelected, "expirationDate": `2023-11-11` }),
   }).then(()=>fetchInfo()).then((info)=> {
     let [items, fridges] = info;
     setFridgeContents(fridges);
     setItemTypes(items);
   })}
   function deleteHandler(fridgeId, contentId){
-    fetch(`http://localhost:3001/api/fridges/${fridgeId}/${contentId}`, {
+    fetch(`/api/fridges/${fridgeId}/${contentId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
