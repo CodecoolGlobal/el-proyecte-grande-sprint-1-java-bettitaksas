@@ -1,14 +1,33 @@
 package com.fridgemaster.demo.service;
 
 import com.fridgemaster.demo.model.Recipe;
+import com.fridgemaster.demo.repository.RecipeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-public interface RecipeService {
-    List<Recipe> getAllRecipes();
+@Service
+public class RecipeService{
+    RecipeRepository recipeRepository;
+    FridgeService fridgeService;
 
-    Recipe getRecipeUsingWorstConditionItem(UUID fridgeId);
+    @Autowired
+    public RecipeService(RecipeRepository recipeRepository, FridgeService fridgeService) {
+        this.recipeRepository = recipeRepository;
+        this.fridgeService = fridgeService;
+    }
 
-    Recipe recommendRecipe(UUID fridgeId);
+
+    public List<Recipe> getAllRecipes() {
+        return null;
+    }
+
+    public Recipe getRecipeUsingWorstConditionItem(UUID fridgeId) {
+        return null;
+    }
+
+    public Recipe recommendRecipe(UUID fridgeId) {
+        return null;
+    }
 }

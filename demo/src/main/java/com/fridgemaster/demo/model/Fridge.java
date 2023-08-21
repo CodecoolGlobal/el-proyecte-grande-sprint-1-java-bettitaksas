@@ -1,9 +1,11 @@
 package com.fridgemaster.demo.model;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+@Entity
 public class Fridge {
     private UUID id;
     List<Item> fridgeItems;
@@ -30,3 +32,5 @@ public class Fridge {
 
 
 }
+
+

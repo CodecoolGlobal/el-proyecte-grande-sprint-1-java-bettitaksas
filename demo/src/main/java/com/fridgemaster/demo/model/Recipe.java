@@ -3,7 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
-    private final String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private  String name;
+    @OneToMany
     private List<Item> ingredients;
     private String description;
 

@@ -1,5 +1,8 @@
-package com.fridgemaster.demo.model;
+package com.fridgemaster.demo.repository;
 
+import com.fridgemaster.demo.model.Item;
+import com.fridgemaster.demo.model.ItemType;
+import com.fridgemaster.demo.model.Recipe;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
@@ -8,11 +11,11 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Repository
-public class RecipeRepository {
+
+public class RecipeRepositoryI {
     List<Recipe> recipes;
 
-    public RecipeRepository() {
+    public RecipeRepositoryI() {
         this.recipes = new ArrayList<>();
     }
 

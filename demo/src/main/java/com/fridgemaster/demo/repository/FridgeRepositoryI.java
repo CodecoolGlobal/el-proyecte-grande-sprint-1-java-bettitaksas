@@ -1,16 +1,18 @@
-package com.fridgemaster.demo.model;
+package com.fridgemaster.demo.repository;
 
 
+import com.fridgemaster.demo.model.Fridge;
+import com.fridgemaster.demo.model.Item;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository
-public class FridgeRepository {
+
+public class FridgeRepositoryI {
     List<Fridge> fridges;
 
-    public FridgeRepository() {
+    public FridgeRepositoryI() {
         this.fridges = new ArrayList<>();
     }
 
@@ -38,7 +40,7 @@ public class FridgeRepository {
         }
     }
 
-    public void deleteItemFromFridge(UUID fridgeID, UUID itemId){
+    public void deleteItemFromFridge(Long fridgeID, Long itemId){
         Optional< Fridge> fridge = fridges.stream().filter(c -> c.getId().equals(fridgeID)).findFirst();
 
         if(fridge.isPresent()){
