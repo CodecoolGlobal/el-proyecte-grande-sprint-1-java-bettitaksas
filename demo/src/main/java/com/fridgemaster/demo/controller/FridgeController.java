@@ -38,12 +38,6 @@ public class FridgeController {
         fridgeService.startNewFridge();
     }
 
-    //put - pl. mennyiség fele elfogy
-/*    @PutMapping("/{itemId}")
-    public void updateItemQuantity(@PathVariable UUID itemId, @RequestBody Item updatedItem) {
-        fridgeService.updateItem(itemId, updatedItem.getQuantity(), updatedItem.get...());
-    }*/
-
     @DeleteMapping("/{fridgeId}/{itemId}")
     public void deleteItem(@PathVariable Long fridgeId, @PathVariable Long itemId){
         fridgeService.deleteItem(fridgeId, itemId);

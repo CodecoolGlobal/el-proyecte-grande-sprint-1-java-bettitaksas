@@ -10,6 +10,7 @@ import Fridges from "./Components/Fridges";
 import Login from "./Components/Login";
 import MainPage from "./Components/MainPage";
 import Recipes from "./Components/Recipes";
+import Register from "./Components/Register";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
       {
         path: "/recipes",
