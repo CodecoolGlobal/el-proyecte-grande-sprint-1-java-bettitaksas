@@ -27,7 +27,7 @@ public class FridgeController {
 
     @GetMapping("/{id}")
     public List<Item> getAllItemFromFridgeById(@PathVariable Long id){
-        return fridgeService.getFridgeItems(id);
+        return fridgeService.getFridgeContents(id);
     }
 
     @PostMapping("/{fridgeId}")
