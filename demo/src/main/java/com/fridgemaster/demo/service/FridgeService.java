@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -26,22 +27,33 @@ public class FridgeService{
         return fridgeRepository.findAll();
     }
 
-    public List<Item> getFridgeContents(Long userId){
-        Optional<User> user = userRepository.findById(userId);
-        if(user.isPresent()) {
-            Fridge fridge = fridgeRepository.getFridgeByUser(user.get());
-            return fridge.getFridgeItems();
-        }
-        else {
-            return null;
+    public List<Item> getFridgeItems(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+
+        if(user == null){
+            throw new NoSuchElementException("No user with this ID");
+        }else{
+        Fridge fridge = fridgeRepository.findFridgeByUser(user);
+        return fridge.getFridgeItems();
         }
     }
 
     public void addItem(Long fridgeId, Item item) {
+        Optional<Fridge> fridge = fridgeRepository.findById(fridgeId);
+
+        if(fridge.isPresent()){
+        fridge.get().addItemToFridge(item);
+        }
     }
 
     public void deleteItem(Long fridgeId, Long itemId) {
-        /*fridgeRepository.deleteItemFromFridge(fridgeId, itemId); */
+        Fridge fridge = fridgeRepository.findById(fridgeId).orElse(null);
+
+        if(fridge == null){
+            throw new NoSuchElementException("No fridge with this id");
+        }else{
+            fridge.deleteItemFromFridge(itemId);
+        }
     }
     public void useRecipe(Long fridgeId, Recipe recipe) {
 
