@@ -25,7 +25,7 @@ public class ItemController {
     }
 
     @PostMapping("")
-    public void addItemToFridge(@RequestBody UUID fridgeId, @RequestBody Item item){
+    public void addItemToFridge(@RequestBody Long fridgeId, @RequestBody Item item){
         fridgeService.addItem(fridgeId, item);
     }
 }
