@@ -1,7 +1,11 @@
 package com.fridgemaster.demo.model;
+import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@NoArgsConstructor
+@Entity
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

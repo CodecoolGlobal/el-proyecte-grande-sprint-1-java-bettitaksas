@@ -31,7 +31,7 @@ public class FridgeController {
     }
 
     @PostMapping("/{fridgeId}")
-    public void addNewItem(@PathVariable UUID fridgeId, @RequestBody Item item) {
+    public void addNewItem(@PathVariable Long fridgeId, @RequestBody Item item) {
         System.out.println(item.toString());
       //  fridgeService.addItem(fridgeId, item);
     }
@@ -47,7 +47,7 @@ public class FridgeController {
     }*/
 
     @DeleteMapping("/{fridgeId}/{itemId}")
-    public void deleteItem(@PathVariable UUID fridgeId, @PathVariable UUID itemId){
+    public void deleteItem(@PathVariable Long fridgeId, @PathVariable Long itemId){
         fridgeService.deleteItem(fridgeId, itemId);
     }
 
