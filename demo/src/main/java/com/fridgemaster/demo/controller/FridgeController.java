@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/fridges")
@@ -25,15 +24,14 @@ public class FridgeController {
      return fridgeService.getFridges();
     }
 
-    @GetMapping("/{id}")
-    public List<Item> getAllItemFromFridgeById(@PathVariable Long id){
-        return fridgeService.getFridgeItems(id);
+    @GetMapping("/{userId}")
+    public List<Item> getAllItemFromFridgeById(@PathVariable Long userId){
+        return fridgeService.getFridgeItems(userId);
     }
 
     @PostMapping("/{fridgeId}")
     public void addNewItem(@PathVariable Long fridgeId, @RequestBody Item item) {
-        System.out.println(item.toString());
-      //  fridgeService.addItem(fridgeId, item);
+        fridgeService.addItem(fridgeId,item);
     }
     @PostMapping("/")
     public void startNewFridge(){
