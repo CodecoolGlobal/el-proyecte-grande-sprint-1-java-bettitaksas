@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.rmi.NoSuchObjectException;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ public class RecipeController {
         return recipeService.getRecipeUsingWorstConditionItem(itemId);
     }*/
     @GetMapping("/recommendation/{fridgeId}")
-    public Recipe recommendRecipe(@PathVariable UUID fridgeId){
+    public Recipe recommendRecipe(@PathVariable Long fridgeId) throws NoSuchObjectException {
         //return recipeService.recommendRecipe(fridgeId);
         return recipeService.getRecipeUsingWorstConditionItem(fridgeId);
     }
