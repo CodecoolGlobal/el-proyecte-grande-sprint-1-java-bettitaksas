@@ -29,6 +29,9 @@ public final class Item {
         this.type = itemType;
     }
 
+    public Item() {
+    }
+
     public Long getId() {
         return id;
     }

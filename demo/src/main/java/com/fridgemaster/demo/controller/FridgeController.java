@@ -26,7 +26,7 @@ public class FridgeController {
     }
 
     @GetMapping("/{id}")
-    public List<Item> getAllItemFromFridgeById(@PathVariable UUID id){
+    public List<Item> getAllItemFromFridgeById(@PathVariable Long id){
         return fridgeService.getFridgeItems(id);
     }
 

@@ -7,15 +7,17 @@ import java.util.List;
 import java.util.UUID;
 @Entity
 public class Fridge {
-    private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @OneToMany
     List<Item> fridgeItems;
 
     public Fridge() {
-        id = UUID.randomUUID();
         fridgeItems = new ArrayList<>();
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
@@ -26,7 +28,7 @@ public class Fridge {
     public void addItemToFridge(Item item){
         fridgeItems.add(item);
     }
-    public void deleteItemFromFridge(UUID id){
+    public void deleteItemFromFridge(Long id){
         fridgeItems.removeIf(c -> c.getId().equals(id));
     }
 
