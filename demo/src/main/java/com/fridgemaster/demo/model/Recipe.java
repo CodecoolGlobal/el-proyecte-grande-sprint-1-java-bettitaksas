@@ -21,6 +21,12 @@ public class Recipe {
         this.description = "";
     }
 
+    public Recipe(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.ingredients = new ArrayList<>();
+    }
+
     public void addIngredient(Item ingredient){
         ingredients.add(ingredient);
     }
