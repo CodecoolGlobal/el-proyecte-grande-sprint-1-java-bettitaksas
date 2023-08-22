@@ -1,9 +1,14 @@
 package com.fridgemaster.demo.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
-
+@Entity
 public final class Item {
     private UUID id;
     private ItemType type;

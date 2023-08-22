@@ -33,7 +33,7 @@ public class FridgeController {
     @PostMapping("/{fridgeId}")
     public void addNewItem(@PathVariable UUID fridgeId, @RequestBody Item item) {
         System.out.println(item.toString());
-        fridgeService.addItem(fridgeId, item);
+      //  fridgeService.addItem(fridgeId, item);
     }
     @PostMapping("/")
     public void startNewFridge(){
