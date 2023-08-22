@@ -20,9 +20,9 @@ public class Fridge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     List<Item> fridgeItems = new ArrayList<>();
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "fridge")
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
