@@ -69,7 +69,7 @@ function fetchInfo(){
                   </li>
                 ))}
               </ul>
-              <select onChange={(e)=> setItemSelected(e.target.value)}><option selected="selected">Choose an item to add to your fridge</option>
+              <select onChange={(e)=> setItemSelected(e.target.value)}defaultValue="Choose an item to add to your fridge" >
                 {itemTypes.map(itemtype => <option key={itemtype}>{itemtype}</option>)}</select>
               <button onClick={() => addHandler(fridge.id, itemSelected)}>Add Item</button>
               <button onClick={()=>recommendRecipe(fridge.id)}>Recommend recipe</button>
