@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [registrationStatus, setRegistrationStatus] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     fetch(`/api/user/register`, {
@@ -11,8 +14,23 @@ function Register() {
       },
       body: JSON.stringify({ username: username, password: password }),
     });
+    setRegistrationStatus(true);
+    console.log('Registration successful!');
   };
   return (
+
+    registrationStatus ? 
+      <div className="login">
+        <div className="outer_container">
+
+        <div className="feedback_box">
+          <h2>Congrats, you registered successfully!</h2>
+          <button onClick={()=>{setRegistrationStatus(false)}}><Link to="/fridges">Let's see my fridge</Link></button>
+        </div>
+
+        </div>
+      </div> :
+    
     <section className="login">
       <div className="login_box">
         <div className="left">
