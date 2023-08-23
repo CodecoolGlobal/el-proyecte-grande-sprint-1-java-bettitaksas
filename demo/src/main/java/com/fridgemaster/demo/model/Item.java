@@ -1,55 +1,36 @@
 package com.fridgemaster.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 @Entity
-public final class Item {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Enumerated(EnumType.ORDINAL)
     private ItemType type;
-    //private int weight;
-    //private double cal;
     private LocalDate expirationDate;
+    @ManyToOne
+    private Fridge fridge;
 
     public Item( ItemType itemType, LocalDate expirationDate) {
         this.type = itemType;
-        //this.weight = weight;
-        //this.cal = cal;
         this.expirationDate = expirationDate;
     }
 
     public Item(ItemType itemType) {
         this.type = itemType;
-    }
-
-    public Item() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public ItemType getType() {
-        return type;
-    }
-
-/*    public int getWeight() {
-        return weight;
-    }
-
-    public double getCal() {
-        return cal;
-    }*/
-
-    public LocalDate getExpirationDate() {
-        return expirationDate;
     }
 
     @Override

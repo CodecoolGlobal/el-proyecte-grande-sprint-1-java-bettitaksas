@@ -35,7 +35,7 @@ public class FridgeController {
     }
     @PostMapping("/")
     public void startNewFridge(){
-        fridgeService.startNewFridge();
+      //  fridgeService.startNewFridge();
     }
 
     @DeleteMapping("/{fridgeId}/{itemId}")

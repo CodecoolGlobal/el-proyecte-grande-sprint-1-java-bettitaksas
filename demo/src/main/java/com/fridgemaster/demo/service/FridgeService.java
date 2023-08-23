@@ -4,7 +4,9 @@ import com.fridgemaster.demo.model.User;
 import com.fridgemaster.demo.repository.FridgeRepository;
 import com.fridgemaster.demo.model.Item;
 import com.fridgemaster.demo.model.Recipe;
+import com.fridgemaster.demo.repository.ItemRepository;
 import com.fridgemaster.demo.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ public class FridgeService{
 
    private final FridgeRepository fridgeRepository;
    private final UserRepository userRepository;
+   private final ItemRepository itemRepository;
     @Autowired
-    public FridgeService(FridgeRepository fridgeRepository, UserRepository userRepository) {
+    public FridgeService(FridgeRepository fridgeRepository, UserRepository userRepository, ItemRepository itemRepository) {
         this.fridgeRepository = fridgeRepository;
         this.userRepository = userRepository;
+        this.itemRepository = itemRepository;
     }
 
     public List<Fridge> getFridges(){
@@ -37,12 +41,15 @@ public class FridgeService{
         return fridge.getFridgeItems();
         }
     }
-
+    @Transactional
     public void addItem(Long fridgeId, Item item) {
-        Optional<Fridge> fridge = fridgeRepository.findById(fridgeId);
+        Fridge fridge = fridgeRepository.findById(fridgeId).orElse(null);
 
-        if(fridge.isPresent()){
-        fridge.get().addItemToFridge(item);
+        if(fridge != null){
+            item.setFridge(fridge);
+            itemRepository.save(item);
+            fridge.addItemToFridge(item);
+            fridgeRepository.save(fridge);
         }
     }
 
@@ -57,8 +64,5 @@ public class FridgeService{
     }
     public void useRecipe(Long fridgeId, Recipe recipe) {
 
-    }
-    public void startNewFridge(){
-        /*fridgeRepository.startNewFridge();*/
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.rmi.NoSuchObjectException;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -33,7 +34,11 @@ public class RecipeController {
     }*/
     @GetMapping("/recommendation/{fridgeId}")
     public Recipe recommendRecipe(@PathVariable Long fridgeId) throws NoSuchObjectException {
-        //return recipeService.recommendRecipe(fridgeId);
-        return recipeService.getRecipeUsingWorstConditionItem(fridgeId);
+        return recipeService.recommendRecipe(fridgeId);
+    }
+
+    @GetMapping("/test/{fridgeId}")
+    public Set<Recipe> testRecipeRecommendation(@PathVariable Long fridgeId){
+        return recipeService.recommendRecipePrototype(fridgeId);
     }
 }
