@@ -1,7 +1,7 @@
 function MainPage(){
 
     return(
-        <section>
+        <section className="main-page">
 
 
 
