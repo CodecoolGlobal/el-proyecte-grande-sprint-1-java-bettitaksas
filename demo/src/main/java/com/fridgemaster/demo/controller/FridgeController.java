@@ -24,6 +24,11 @@ public class FridgeController {
      return fridgeService.getFridges();
     }
 
+    @GetMapping("/{fridgeId}")
+    public Fridge getFridgeById(@PathVariable Long fridgeId){
+        return fridgeService.getFridgeById(fridgeId);
+    }
+
     @GetMapping("/{userId}")
     public List<Item> getAllItemFromFridgeById(@PathVariable Long userId){
         return fridgeService.getFridgeItems(userId);

@@ -72,8 +72,7 @@ public class RecipeService{
 
             if (worstConditionItem.isPresent()) {
                 ItemType type = worstConditionItem.get().getType();
-                return recipeRepository.findRecipeByItemType(type)
-                        .orElse(null);
+                return recipeRepository.findRecipesByItemType(type).stream().findAny().orElse(null);
             }
         } else {
             throw new NoSuchObjectException("There is no fridge with this id.");

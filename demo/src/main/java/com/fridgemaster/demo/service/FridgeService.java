@@ -66,4 +66,8 @@ public class FridgeService{
     public void startNewFridge(){
         /*fridgeRepository.startNewFridge();*/
     }
+
+    public Fridge getFridgeById(Long fridgeId) {
+        return fridgeRepository.findById(fridgeId).get();
+    }
 }

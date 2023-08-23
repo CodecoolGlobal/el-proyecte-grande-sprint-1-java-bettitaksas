@@ -3,10 +3,7 @@ package com.fridgemaster.demo.controller;
 import com.fridgemaster.demo.model.Recipe;
 import com.fridgemaster.demo.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.rmi.NoSuchObjectException;
 import java.util.List;
@@ -31,6 +28,8 @@ public class RecipeController {
     public Recipe getRecipesMatchingWithItem(@PathVariable UUID itemId) {
         return recipeService.getRecipeUsingWorstConditionItem(itemId);
     }*/
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/recommendation/{fridgeId}")
     public Recipe recommendRecipe(@PathVariable Long fridgeId) throws NoSuchObjectException {
         //return recipeService.recommendRecipe(fridgeId);
