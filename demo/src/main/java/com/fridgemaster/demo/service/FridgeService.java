@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class FridgeService{
@@ -52,13 +53,12 @@ public class FridgeService{
     }
 
     public void deleteItem(Long fridgeId, Long itemId) {
-        Fridge fridge = fridgeRepository.findById(fridgeId).orElse(null);
+        Optional<Fridge> fridgeOptional = fridgeRepository.findById(fridgeId);
 
-        if(fridge == null){
-            throw new NoSuchElementException("No fridge with this id");
-        }else{
+        fridgeOptional.ifPresent(fridge -> {
             fridge.deleteItemFromFridge(itemId);
-        }
+            fridgeRepository.save(fridge);
+        });
     }
     public void useRecipe(Long fridgeId, Recipe recipe) {
 
