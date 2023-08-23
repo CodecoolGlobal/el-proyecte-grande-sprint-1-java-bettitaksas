@@ -231,3 +231,7 @@ img{
     padding-right: 7px;
     margin-top: -3px;
 }
+
+.ItemAdder{
+  display: flex;
+}
