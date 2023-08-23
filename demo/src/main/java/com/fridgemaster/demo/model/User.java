@@ -1,5 +1,7 @@
 package com.fridgemaster.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +25,8 @@ public class User {
     private String password;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fridge_id")
+    @JsonBackReference
+    @JsonManagedReference
     private Fridge fridge;
 
     public User(String username, String password) {
