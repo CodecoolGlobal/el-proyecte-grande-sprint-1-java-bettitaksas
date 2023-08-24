@@ -11,7 +11,7 @@ function Header() {
           <Link to="/recipes">Recipes</Link>
           <Link to="/login">Login</Link>
           <Link to = "/register">Register</Link>
-          <Link to="/fridges">My Fridges</Link>
+          <Link to="/fridges">My Fridge</Link>
         </nav>
       </div>
       <Outlet />
