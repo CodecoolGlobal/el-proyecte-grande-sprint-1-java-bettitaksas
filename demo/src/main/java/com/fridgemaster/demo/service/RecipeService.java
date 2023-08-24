@@ -89,13 +89,15 @@ public class RecipeService{
     public Recipe recommendRecipe(Long fridgeId) throws NoSuchObjectException {
         return getRecipeUsingWorstConditionItem(fridgeId);
     }
-    public Set<Recipe> recommendRecipePrototype(Long fridgeId) {
+    public List<Recipe> recommendRecipePrototype(Long fridgeId) {
         List<Recipe> recipes = recipeRepository.findAll();
         List<Item> fridgeContent = fridgeRepository.findById(fridgeId).get().getFridgeItems();
-        recipes = orderByExpiringItems(recipes, fridgeContent, 5);
-        recipes = orderByRequiredItemCount(recipes, fridgeContent, 2);
+        recipes = orderByExpiringItems(recipes, fridgeContent, 3);
+        recipes = orderByRequiredItemCount(recipes, fridgeContent, 3);
 
-        return (Set<Recipe>) recipes;
+
+
+        return recipes;
     }
     private List<Recipe> orderByRequiredItemCount(List<Recipe> recipes, List<Item>items, int numberOfRecipesNeeded){
         List<Recipe> orderedRecipes = new ArrayList<>(recipes);
@@ -115,7 +117,6 @@ public class RecipeService{
 
             return requiredItemCountO1 - requiredItemCountO2;
         });
-
         return orderedRecipes.stream().limit(numberOfRecipesNeeded).collect(Collectors.toList());
     }
 
@@ -126,7 +127,7 @@ public class RecipeService{
         Collections.sort(orderedRecipes, (o1,o2)-> {
             int o1Score = 0;
             int o2Score = 0;
-            for(int i = 0, score = itemsSortedByExpiration.size() - 1; i < itemsSortedByExpiration.size(); i++ , score--){
+            for(int i = 0, score = itemsSortedByExpiration.size(); i < itemsSortedByExpiration.size(); i++ , score--){
                 if(o1.getIngredients().contains(itemsSortedByExpiration.get(i))){
                     o1Score += score;
                 }
@@ -134,9 +135,8 @@ public class RecipeService{
                     o2Score += score;
                 }
             }
-            return o1Score - o2Score;
+            return  o2Score - o1Score;
         });
-
         return orderedRecipes.stream().limit(numberOfRecipesNeeded).collect(Collectors.toList());
     }
 }

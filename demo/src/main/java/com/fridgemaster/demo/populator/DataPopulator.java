@@ -42,9 +42,7 @@ public class DataPopulator implements ApplicationRunner {
     @Override
     @Transactional
     public void run(ApplicationArguments args) throws Exception {
-        if (fridgeRepository.count() == 0 && recipeRepository.count() == 0) {
-            populateData();
-        }
+           // populateData();
     }
 
     public void populateData() {

@@ -64,7 +64,7 @@ function Fridges() {
   }
 
   function recommendRecipe(fridgeId) {
-    fetch(`http://localhost:3001/api/recipes/recommendation/${fridgeId}`)
+    fetch(`/api/recipes/${fridgeId}`)
       .then((res) => res.json())
       .then((recipe) => setRecommendedRecipe(recipe));
   }
