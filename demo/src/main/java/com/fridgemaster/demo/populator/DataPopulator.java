@@ -36,7 +36,7 @@ public class DataPopulator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        if (fridgeRepository.count() == 0 && recipeRepository.count() == 0) {
+        if (fridgeRepository.count() == 0 || recipeRepository.count() == 0) {
             populateData();
         }
     }
@@ -77,5 +77,28 @@ public class DataPopulator implements ApplicationRunner {
         recipeRepository.save(spaghettiBolognese);
 
         // ... add more recipes
+
+      /*  Recipe boringSoup = new Recipe("boring soup", "boring stuff");
+        boringSoup.addIngredient(new Item(ItemType.KETCHUP));
+        boringSoup.addIngredient(new Item(ItemType.BUTTER));
+        recipeRepository.save(boringSoup);
+        Recipe test01 = new Recipe("test", "test test");
+        test01.addIngredient(new Item(ItemType.EGG));
+        test01.addIngredient(new Item(ItemType.CARROT));
+        recipeRepository.save(test01);
+        Recipe testTonsOfStuff = new Recipe("testtt", "test");
+        testTonsOfStuff.addIngredient(new Item(ItemType.CARROT));
+        testTonsOfStuff.addIngredient(new Item(ItemType.KETCHUP));
+        testTonsOfStuff.addIngredient(new Item(ItemType.CHICKEN));
+        testTonsOfStuff.addIngredient(new Item(ItemType.BROCCOLI));
+        testTonsOfStuff.addIngredient(new Item(ItemType.GROUND_MEAT));
+        testTonsOfStuff.addIngredient(new Item(ItemType.TOFU));
+        recipeRepository.save(testTonsOfStuff);
+        Recipe test02 = new Recipe("1", "");
+        test02.addIngredient(new Item(ItemType.CHICKEN));
+        recipeRepository.save(test02);
+        Recipe test03 = new Recipe("","");
+        test03.addIngredient(new Item(ItemType.TOFU));
+        recipeRepository.save(test03); */
     }
 }

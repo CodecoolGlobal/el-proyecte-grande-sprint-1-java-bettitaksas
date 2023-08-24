@@ -96,8 +96,8 @@ public class RecipeService{
     public Set<Recipe> recommendRecipePrototype(Long fridgeId) {
         List<Recipe> recipes = recipeRepository.findAll();
         List<Item> fridgeContent = itemRepository.findByFridge(fridgeRepository.findById(fridgeId).get());
-        recipes = orderByExpiringItems(recipes, fridgeContent, RecommendationConstant.RECOMMENDED_NUMBER_OF_RECIPES);
-        recipes = orderByRequiredItemCount(recipes, fridgeContent, RecommendationConstant.RECOMMENDED_NUMBER_OF_RECIPES);
+        recipes = orderByExpiringItems(recipes, fridgeContent, RecommendationConstant.FILTERED_BY_EXP);
+        recipes = orderByRequiredItemCount(recipes, fridgeContent, RecommendationConstant.FILTERED_BY_REQ_ITEM);
 
         return (Set<Recipe>) recipes;
     }
