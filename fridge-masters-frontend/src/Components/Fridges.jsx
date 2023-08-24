@@ -80,15 +80,21 @@ function Fridges() {
       {fridgeContents ? (
         <>
           {fridgeContents.map((fridge, index) => (
-            <div key={fridge.id}>
-              {"Fridge: " + (index + 1)}
+            <div key={fridge.id} className="fridge-box">
+              {/* {"Fridge: " + (index + 1)} */}
               <h2>{fridge.name}</h2>
               <ul>
                 {fridge.fridgeItems.map((contents) => (
                   <li key={contents.id}>
-                    Ingredient: {contents.type} Expires:{" "}
+                    <div className="type">
+                    {contents.type}
+                    </div>
+                    
+                    <div className="exp">
                     {contents.expirationDate}
-                    <div onClick={() => deleteHandler(fridge.id, contents.id)}>
+                    </div>
+
+                    <div className="bin" onClick={() => deleteHandler(fridge.id, contents.id)}>
                       🗑️
                     </div>
                   </li>
@@ -106,6 +112,7 @@ function Fridges() {
               <DatePicker
                 selected={selectedDate}
                 onChange={(date) => setSelectedDate(date)}
+                placeholderText="Select expiration date"
               />
               <button onClick={() => addHandler(fridge.id, itemSelected)}>
                 Add Item
