@@ -25,4 +25,9 @@ public class UserService {
         userRepository.save(user);
         System.out.println(user.getId());
     }
+
+    public Long loginUser(User user){
+        User loggedInUser = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+        return fridgeRepository.findFridgeByUser(loggedInUser).getId();
+    }
 }
