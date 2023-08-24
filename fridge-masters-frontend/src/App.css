@@ -371,8 +371,16 @@ img{
 }  
 
 .header {
-  position: sticky;
+  position: fixed;
+  width: 100%;
   top: 0;
   z-index: 1;
 }
 
+.recipes {
+  margin-top: 100px;
+}
+
+.fridge-page {
+  margin-top: 100px;
+}

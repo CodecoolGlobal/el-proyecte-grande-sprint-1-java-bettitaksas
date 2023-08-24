@@ -76,7 +76,7 @@ function Fridges() {
   }
 
   return (
-    <div>
+    <div className="fridge-page">
       {fridgeContents ? (
         <>
           {fridgeContents.map((fridge, index) => (
