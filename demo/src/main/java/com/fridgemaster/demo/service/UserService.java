@@ -23,5 +23,6 @@ public class UserService {
         fridgeRepository.save(fridge);
         user.setFridge(fridge);
         userRepository.save(user);
+        System.out.println(user.getId());
     }
 }

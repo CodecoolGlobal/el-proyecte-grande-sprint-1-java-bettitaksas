@@ -11,7 +11,7 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private  String name;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Item> ingredients;
     private String description;
 
