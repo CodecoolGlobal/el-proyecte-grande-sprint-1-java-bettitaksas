@@ -1,41 +1,47 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 function Recipes() {
-  const [recipes, setRecipes] = useState(null);
-  const [update, setUpdate] = useState(0);
+    const [recipes, setRecipes] = useState(null);
+    const [update, setUpdate] = useState(0);
 
-  useEffect(() => {
-    fetch(`/api/recipes`)
-      .then((res) => res.json())
-      .then((data) => setRecipes(data));
-  }, [update]);
-  return (
-    <div>
-      {recipes ? (
+    useEffect(() => {
+        fetch(`/api/recipes`)
+            .then((res) => res.json())
+            .then((data) => setRecipes(data));
+    }, [update]);
+    return (
         <div>
-          {recipes.map((recipe, index) => (
-            <ul>
-              <li key={index}>
-                {recipe.name}
-                <br />
-                <div>
-                  {" "}
-                  Ingredients:
-                  {recipe.ingredients.map((ingredient) => (
-                    <ul>
-                      <li>{ingredient.type}</li>
-                    </ul>
-                  ))}
+            {recipes ? (
+                <div className='recipes'>
+                    {recipes.map((recipe, index) => (
+                        <div key={index} className='recipe-box'>
+                            <ul key={index}>
+                                <li>
+                                  <h4>{recipe.name}</h4>
+                                    <br />
+                                    <div>
+                                      <div className='ingreds'>
+                                      Ingredients:
+                                        {recipe.ingredients.map(
+                                            (ingredient, i) => (
+                                                <ul key={i}>
+                                                    <li>{ingredient.type}</li>
+                                                </ul>
+                                            )
+                                        )}
+                                      </div>
+                                        {recipe.description}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    ))}
                 </div>
-              </li>
-            </ul>
-          ))}
+            ) : (
+                <div>loading...</div>
+            )}
         </div>
-      ) : (
-        <div>loading...</div>
-      )}
-    </div>
-  );
+    );
 }
 
 export default Recipes;
