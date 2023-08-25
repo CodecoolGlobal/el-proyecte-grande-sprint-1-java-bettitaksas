@@ -1,11 +1,14 @@
+import { useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
-function Header() {
+function Header(LOGGED_IN_USER) {
+  
   return (
     <>
       <div className="header">
         <Link to="/" className="title">
           Fridge Master
         </Link>
+        <div>{LOGGED_IN_USER[0]}</div>
         <nav className="navLinks">
           <Link to="/">Home</Link>
           <Link to="/recipes">Recipes</Link>

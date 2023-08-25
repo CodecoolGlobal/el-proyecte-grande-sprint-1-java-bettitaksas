@@ -11,11 +11,14 @@ import Login from "./Components/Login";
 import MainPage from "./Components/MainPage";
 import Recipes from "./Components/Recipes";
 import Register from "./Components/Register";
+import { useState } from "react";
 
+let LOGGED_IN_USER = [];
+console.log(Object.isExtensible(LOGGED_IN_USER));
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Header />,
+    element: <Header LOGGED_IN_USER ={LOGGED_IN_USER} />,
     errorElement: <ErrorElement />,
     
     children: [
@@ -25,11 +28,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/fridges",
-        element: <Fridges />,
+        element: <Fridges LOGGED_IN_USER ={LOGGED_IN_USER}/>,
       },
       {
         path: "/login",
-        element: <Login />,
+        element: <Login LOGGED_IN_USER ={LOGGED_IN_USER} />,
       },
       {
         path: "/register",

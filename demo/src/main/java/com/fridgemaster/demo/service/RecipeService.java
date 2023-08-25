@@ -46,26 +46,6 @@ public class RecipeService{
         recipeRepository.deleteById(recipeId);
     }
 
-/*    public Recipe getRecipeUsingWorstConditionItem(Long fridgeId) throws NoSuchObjectException {
-        Optional<Fridge> optionalFridge = fridgeRepository.findById(fridgeId);
-        if (optionalFridge.isPresent()){
-            List<Item> items = optionalFridge.get().getFridgeItems();
-
-            Optional<Item> worstConditionItem = items.stream()
-                    .min(Comparator.comparing(Item::getExpirationDate));
-
-            ItemType type;
-            if (worstConditionItem.isPresent()){
-                type = worstConditionItem.get().getType();
-                return recipeRepository.findAll().stream()
-                        .filter(recipe -> recipe.getIngredients().stream()
-                                .anyMatch(ingredient -> ingredient.getType().equals(type)))
-                        .findAny().get();
-            } return null;
-
-        } throw new NoSuchObjectException("There is no fridge with this id.");
-    }*/
-
     public Recipe getRecipeUsingWorstConditionItem(Long fridgeId) throws NoSuchObjectException {
         Optional<Fridge> optionalFridge = fridgeRepository.findById(fridgeId);
 
@@ -92,8 +72,8 @@ public class RecipeService{
     public List<Recipe> recommendRecipePrototype(Long fridgeId) {
         List<Recipe> recipes = recipeRepository.findAll();
         List<Item> fridgeContent = fridgeRepository.findById(fridgeId).get().getFridgeItems();
-        recipes = orderByExpiringItems(recipes, fridgeContent, 3);
-        recipes = orderByRequiredItemCount(recipes, fridgeContent, 3);
+        recipes = orderByExpiringItems(recipes, fridgeContent, RecommendedRecipeNumConst.RECOMMENDED_RECIPE_COUNT);
+        recipes = orderByRequiredItemCount(recipes, fridgeContent, RecommendedRecipeNumConst.RECOMMENDED_RECIPE_COUNT);
 
 
 
