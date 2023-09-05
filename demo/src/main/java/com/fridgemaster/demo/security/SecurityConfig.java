@@ -42,9 +42,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/api/user/**").permitAll().anyRequest().authenticated()
-                )
+                .authorizeRequests()
+                        .requestMatchers("/api/user/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .httpBasic(withDefaults());
         return http.build();
     }
