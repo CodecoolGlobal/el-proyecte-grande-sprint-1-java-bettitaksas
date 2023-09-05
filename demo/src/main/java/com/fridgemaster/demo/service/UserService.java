@@ -3,6 +3,7 @@ import com.fridgemaster.demo.model.Fridge;
 import com.fridgemaster.demo.model.User;
 import com.fridgemaster.demo.repository.FridgeRepository;
 import com.fridgemaster.demo.repository.UserRepository;
+import com.fridgemaster.demo.security.Role;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 @Service
@@ -18,12 +19,12 @@ public class UserService {
 
     @Transactional
     public void registerUser(User user) {
+        user.setRole(Role.User);
         Fridge fridge = new Fridge();
         fridge.setUser(user);
         fridgeRepository.save(fridge);
         user.setFridge(fridge);
         userRepository.save(user);
-        System.out.println(user.getId());
     }
 
     public Long loginUser(User user){

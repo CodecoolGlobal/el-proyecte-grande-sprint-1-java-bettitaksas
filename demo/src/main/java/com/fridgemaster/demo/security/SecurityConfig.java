@@ -1,14 +1,24 @@
 package com.fridgemaster.demo.security;
 
+import com.fridgemaster.demo.repository.UserRepository;
+import com.fridgemaster.demo.service.FridgeUserDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -25,30 +35,35 @@ public class SecurityConfig {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
     }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withDefaultPasswordEncoder().username("user").password("password").roles("USER").build());
-        return manager;
-    }
-
+/*
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService)
             throws Exception {
-
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder)
+                .and()
+                .build();
     }
-
+*/
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                        .requestMatchers("/api/user/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic(withDefaults());
+                .csrf()
+                .disable()
+                .authorizeRequests(auth -> auth.requestMatchers("/**"))
+                .authenticationProvider(authenticationProvider());
         return http.build();
     }
-
-
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config)throws Exception{
+        return config.getAuthenticationManager();
+    }
+    @Bean
+    AuthenticationProvider authenticationProvider() {
+       final DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+       daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+       daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+       return daoAuthenticationProvider;
+    }
 }

@@ -7,6 +7,7 @@ import com.fridgemaster.demo.model.Recipe;
 import com.fridgemaster.demo.repository.FridgeRepository;
 import com.fridgemaster.demo.repository.ItemRepository;
 import com.fridgemaster.demo.repository.RecipeRepository;
+import com.fridgemaster.demo.service.constants.RecommendedRecipeNumConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

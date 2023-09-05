@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class FridgeUserDetailService implements UserDetailsService {
 
@@ -23,7 +25,8 @@ public class FridgeUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-        UserDetails userDetails = new UserDetailsImpl(user.getUsername(), user.getPassword());
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
+      //  UserDetails userDetails = new UserDetailsImpl(user.getUsername(), user.getPassword());
         return userDetails;
     }
 }
