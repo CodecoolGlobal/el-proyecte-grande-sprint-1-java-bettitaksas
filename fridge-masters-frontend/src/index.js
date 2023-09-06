@@ -12,9 +12,9 @@ import MainPage from "./Components/MainPage";
 import Recipes from "./Components/Recipes";
 import Register from "./Components/Register";
 import { useState } from "react";
+import SingleRecipe from "./Components/SingleRecipe";
 
 let LOGGED_IN_USER = [];
-console.log(Object.isExtensible(LOGGED_IN_USER));
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/recipes",
         element: <Recipes/>
+      },
+      {
+        path: "/recipe/:id",
+        element: <SingleRecipe LOGGED_IN_USER={LOGGED_IN_USER}/>
       }
     ],
   },

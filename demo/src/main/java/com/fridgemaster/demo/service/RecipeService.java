@@ -7,6 +7,7 @@ import com.fridgemaster.demo.model.Recipe;
 import com.fridgemaster.demo.repository.FridgeRepository;
 import com.fridgemaster.demo.repository.ItemRepository;
 import com.fridgemaster.demo.repository.RecipeRepository;
+import com.fridgemaster.demo.service.constants.RecommendedRecipeNumConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,6 +67,9 @@ public class RecipeService{
         return null;
     }
 
+    public Recipe getRecipeById(Long recipeId){
+        return recipeRepository.getRecipeById(recipeId);
+    }
     public Recipe recommendRecipe(Long fridgeId) throws NoSuchObjectException {
         return getRecipeUsingWorstConditionItem(fridgeId);
     }
@@ -74,7 +78,6 @@ public class RecipeService{
         List<Item> fridgeContent = fridgeRepository.findById(fridgeId).get().getFridgeItems();
         recipes = orderByExpiringItems(recipes, fridgeContent, RecommendedRecipeNumConst.RECOMMENDED_RECIPE_COUNT);
         recipes = orderByRequiredItemCount(recipes, fridgeContent, RecommendedRecipeNumConst.RECOMMENDED_RECIPE_COUNT);
-
 
 
         return recipes;

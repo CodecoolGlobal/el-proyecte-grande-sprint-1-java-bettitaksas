@@ -6,10 +6,13 @@ function Login({LOGGED_IN_USER}){
       headers: {
           'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username: LOGGED_IN_USER[0], password: LOGGED_IN_USER[1] }),
+      body: JSON.stringify({ login: LOGGED_IN_USER[0], username: LOGGED_IN_USER[0], password: LOGGED_IN_USER[1], role: 1 }),
   })
   .then(res => res.json())
-  .then(fridgeId => LOGGED_IN_USER[2] = fridgeId);
+  .then(responseEntity => {
+    LOGGED_IN_USER[2] = responseEntity.fridgeId;
+    LOGGED_IN_USER[3] = responseEntity.token;
+  });
   };
   function handleUsername(username){
     LOGGED_IN_USER[0] = username;

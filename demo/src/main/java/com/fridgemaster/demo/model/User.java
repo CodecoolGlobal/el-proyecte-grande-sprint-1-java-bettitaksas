@@ -2,6 +2,7 @@ package com.fridgemaster.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fridgemaster.demo.security.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,8 @@ public class User {
     @JsonBackReference
     @JsonManagedReference
     private Fridge fridge;
+    private Role role;
+    private String login;
 
     public User(String username, String password) {
         this.username = username;

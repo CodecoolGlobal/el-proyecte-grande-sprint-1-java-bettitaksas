@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { Link } from "react-router-dom";
 function Fridges({LOGGED_IN_USER}) {
   const [fridgeContents, setFridgeContents] = useState(null);
   const [itemTypes, setItemTypes] = useState(null);
   const [itemSelected, setItemSelected] = useState(null);
   const [recommendedRecipe, setRecommendedRecipe] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
-console.log(LOGGED_IN_USER)
   function fetchInfo() {
     let fetchReqs = [
-      fetch(`/api/items`).then((res) => res.json()),
-      fetch(`/api/fridges/${LOGGED_IN_USER[2]}`).then((res) => res.json()),
+      fetch(`/api/items`, {
+        headers: {
+          Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json()),
+      fetch(`/api/fridges/${LOGGED_IN_USER[2]}`, {
+        headers: {
+          Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json()),
     ];
     return Promise.all(fetchReqs);
   }
@@ -33,6 +42,7 @@ console.log(LOGGED_IN_USER)
     fetch(`/api/fridges/${fridgeId}`, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -52,6 +62,7 @@ console.log(LOGGED_IN_USER)
     fetch(`/api/fridges/${fridgeId}/${contentId}`, {
       method: "DELETE",
       headers: {
+        Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
         "Content-Type": "application/json",
       },
     })
@@ -64,18 +75,23 @@ console.log(LOGGED_IN_USER)
   }
 
   function recommendRecipe(fridgeId) {
-    fetch(`/api/recipes/${fridgeId}`)
+    fetch(`/api/recipes/${fridgeId}`, {
+      headers: {
+        Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((recipe) => setRecommendedRecipe(recipe));
   }
 
   function getRecipe() {
     if (recommendedRecipe) {
+      console.log(recommendedRecipe[0])
       return recommendedRecipe;
     }
     return []
   }
-console.log(fridgeContents)
   return (
     <div className="fridge-page">
       {fridgeContents ? (
@@ -120,7 +136,7 @@ console.log(fridgeContents)
               <button onClick={() => recommendRecipe(fridge.id)}>
                 Recommend recipe
               </button>
-              <div>{getRecipe().map((rec) => (<div>{rec.name}</div>))}</div>
+              <div>{getRecipe().map((rec) => (<div><Link to = {`/recipe/${rec.id}`}>{rec.name}</Link></div>))}</div>
               </div>
             </div>
           ))}

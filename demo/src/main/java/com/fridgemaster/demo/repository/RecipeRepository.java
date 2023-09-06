@@ -18,4 +18,6 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     @Query("SELECT DISTINCT r FROM Recipe r JOIN r.ingredients i WHERE i.type = :itemType")
     List<Recipe> findRecipesByItemType(@Param("itemType") ItemType itemType);
 
+    Recipe getRecipeById(Long id);
+
 }
