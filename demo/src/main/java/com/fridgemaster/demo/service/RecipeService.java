@@ -67,6 +67,9 @@ public class RecipeService{
         return null;
     }
 
+    public Recipe getRecipeById(Long recipeId){
+        return recipeRepository.getById(recipeId);
+    }
     public Recipe recommendRecipe(Long fridgeId) throws NoSuchObjectException {
         return getRecipeUsingWorstConditionItem(fridgeId);
     }

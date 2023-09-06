@@ -29,6 +29,10 @@ public class RecipeController {
     public List<Recipe> testRecommendationPrototype(@PathVariable Long fridgeId){
         return recipeService.recommendRecipePrototype(fridgeId);
     }
+    @GetMapping("/{recipeId}")
+    public Recipe getRecipe(@RequestParam Long recipeId){
+        return recipeService.getRecipeById(recipeId);
+    }
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/recommendation/{fridgeId}")
     public Recipe recommendRecipe(@PathVariable Long fridgeId) throws NoSuchObjectException {

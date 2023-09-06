@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { Link } from "react-router-dom";
 function Fridges({LOGGED_IN_USER}) {
   const [fridgeContents, setFridgeContents] = useState(null);
   const [itemTypes, setItemTypes] = useState(null);
   const [itemSelected, setItemSelected] = useState(null);
   const [recommendedRecipe, setRecommendedRecipe] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
-console.log(LOGGED_IN_USER)
   function fetchInfo() {
     let fetchReqs = [
       fetch(`/api/items`).then((res) => res.json()),
@@ -75,7 +74,6 @@ console.log(LOGGED_IN_USER)
     }
     return []
   }
-console.log(fridgeContents)
   return (
     <div className="fridge-page">
       {fridgeContents ? (
@@ -120,7 +118,7 @@ console.log(fridgeContents)
               <button onClick={() => recommendRecipe(fridge.id)}>
                 Recommend recipe
               </button>
-              <div>{getRecipe().map((rec) => (<div>{rec.name}</div>))}</div>
+              <div>{getRecipe().map((rec) => (<div><Link to = {`/recipe/${rec.id}`}>{rec.name}</Link></div>))}</div>
               </div>
             </div>
           ))}
