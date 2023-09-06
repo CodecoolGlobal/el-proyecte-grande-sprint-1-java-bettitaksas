@@ -22,6 +22,7 @@ public class UserController {
     //login user sends back the id of their fridge for now
     @PutMapping("/login")
     public Long loginUser(@RequestBody User user){
+        System.out.println("HELLO");
         return userService.loginUser(user);
     }
 }

@@ -1,41 +1,33 @@
 package com.fridgemaster.demo.security;
 
-import com.fridgemaster.demo.repository.UserRepository;
-import com.fridgemaster.demo.service.FridgeUserDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.Set;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import javax.crypto.SecretKey;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final PasswordEncoder passwordEncoder;
+    private final SecretKey secretKey = Keys.hmacShaKeyFor("zdtlD3JK56m6wTTgsNFhqzjqPzdtlD3JK56m6wTTgsNFhqzjqP".getBytes());
 
     private final UserDetailsService userDetailsService;
+    private final com.fridgemaster.demo.security.AuthenticationManager authenticationManager;
 
-    public SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
+    public SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService, com.fridgemaster.demo.security.AuthenticationManager authenticationManager) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
+        this.authenticationManager = authenticationManager;
     }
 /*
     @Bean
@@ -53,6 +45,8 @@ public class SecurityConfig {
         http
                 .csrf()
                 .disable()
+                .addFilter(new UsernameAndPasswordFilter(authenticationManager,secretKey))
+                .addFilterAfter(new JwtTokenVerifier(),UsernameAndPasswordFilter.class)
                 .authorizeRequests(auth -> auth
                         .requestMatchers("/api/user/**").permitAll()
                         .requestMatchers("/api/fridges/**").hasAnyRole(Role.User.getRole(), Role.Premium_User.getRole(), Role.Admin.getRole())
@@ -60,10 +54,10 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider());
         return http.build();
     }
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config)throws Exception{
-        return config.getAuthenticationManager();
-    }
+    //@Bean
+    //public AuthenticationManager authenticationManager(AuthenticationConfiguration config)throws Exception{
+    //    return config.getAuthenticationManager();
+    //}
     @Bean
     AuthenticationProvider authenticationProvider() {
        final DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
