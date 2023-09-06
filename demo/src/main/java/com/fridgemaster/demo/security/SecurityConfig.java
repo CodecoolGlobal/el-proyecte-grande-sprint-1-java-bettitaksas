@@ -3,19 +3,21 @@ package com.fridgemaster.demo.security;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.crypto.SecretKey;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity()
 public class SecurityConfig {
 
     private final PasswordEncoder passwordEncoder;
@@ -23,11 +25,13 @@ public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
     private final com.fridgemaster.demo.security.AuthenticationManager authenticationManager;
+    private final AuthProvider authProvider;
 
-    public SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService, com.fridgemaster.demo.security.AuthenticationManager authenticationManager) {
+    public SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService, AuthenticationManager authenticationManager, AuthProvider authProvider) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.authenticationManager = authenticationManager;
+        this.authProvider = authProvider;
     }
 /*
     @Bean
@@ -43,21 +47,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                .disable()
-                .addFilter(new UsernameAndPasswordFilter(authenticationManager,secretKey))
-                .addFilterAfter(new JwtTokenVerifier(),UsernameAndPasswordFilter.class)
-                .authorizeRequests(auth -> auth
-                        .requestMatchers("/api/user/**").permitAll()
-                        .requestMatchers("/api/fridges/**").hasAnyRole(Role.User.getRole(), Role.Premium_User.getRole(), Role.Admin.getRole())
-                )
-                .authenticationProvider(authenticationProvider());
+                .addFilterBefore(new JwtTokenVerifier(authProvider), BasicAuthenticationFilter.class)
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("api/user/**").permitAll()
+                        .anyRequest().authenticated())
+        ;
         return http.build();
     }
-    //@Bean
-    //public AuthenticationManager authenticationManager(AuthenticationConfiguration config)throws Exception{
-    //    return config.getAuthenticationManager();
-    //}
     @Bean
     AuthenticationProvider authenticationProvider() {
        final DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
