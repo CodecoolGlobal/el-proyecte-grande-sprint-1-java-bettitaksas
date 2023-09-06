@@ -3,7 +3,6 @@ import java.util.EnumSet;
 import java.util.Set;
 
 public enum Role {
-    Guest("Guest"),
     User("User"),
     Premium_User("Premium_User"),
     Admin("Admin");

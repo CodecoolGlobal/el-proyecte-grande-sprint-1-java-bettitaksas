@@ -9,6 +9,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.assertj.core.util.Strings;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,54 +26,33 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
-    private final Key secretKey = Keys.hmacShaKeyFor("zdtlD3JK56m6wTTgsNFhqzjqPzdtlD3JK56m6wTTgsNFhqzjqP".getBytes());
-
-/*    private final SecretKey secretKey;
-
-    public JwtTokenVerifier(SecretKey secretKey) {
-        this.secretKey = secretKey;
-    }*/
-
+    private final AuthProvider authProvider;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest httpServletRequest,
+            HttpServletResponse httpServletResponse,
+            FilterChain filterChain) throws ServletException, IOException {
+        String header = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
 
-        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (header != null) {
+            String[] authElements = header.split(" ");
 
-        if (Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
+            if (authElements.length == 2
+                    && "Bearer".equals(authElements[0])) {
+                try {
+                    SecurityContextHolder.getContext().setAuthentication(
+                            authProvider.validateToken(authElements[1]));
+                } catch (RuntimeException e) {
+                    SecurityContextHolder.clearContext();
+                    throw e;
+                }
+            }
         }
 
-        String token = authorizationHeader.replace("Bearer ", "");
-
-        try {
-            Jws<Claims> claimsJws = Jwts.parser()
-                    .setSigningKey(secretKey)
-                    .parseClaimsJws(token);
-
-            Claims body = claimsJws.getBody();
-
-            String username = body.getSubject();
-
-            var authorities = (List<Map<String, String>>) body.get("authorities");
-
-            Set<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
-                    .map(m -> new SimpleGrantedAuthority(m.get("authority")))
-                    .collect(Collectors.toSet());
-
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    username,
-                    null,
-                    simpleGrantedAuthorities
-            );
-
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (JwtException e) {
-            throw new IllegalStateException(String.format("Token %s cannot be trusted", token));
-        }
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }

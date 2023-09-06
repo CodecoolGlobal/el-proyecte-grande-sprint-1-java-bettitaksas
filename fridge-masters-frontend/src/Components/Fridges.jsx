@@ -10,8 +10,18 @@ function Fridges({LOGGED_IN_USER}) {
   const [selectedDate, setSelectedDate] = useState(null);
   function fetchInfo() {
     let fetchReqs = [
-      fetch(`/api/items`).then((res) => res.json()),
-      fetch(`/api/fridges/${LOGGED_IN_USER[2]}`).then((res) => res.json()),
+      fetch(`/api/items`, {
+        headers: {
+          Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json()),
+      fetch(`/api/fridges/${LOGGED_IN_USER[2]}`, {
+        headers: {
+          Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json()),
     ];
     return Promise.all(fetchReqs);
   }
@@ -32,6 +42,7 @@ function Fridges({LOGGED_IN_USER}) {
     fetch(`/api/fridges/${fridgeId}`, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -51,6 +62,7 @@ function Fridges({LOGGED_IN_USER}) {
     fetch(`/api/fridges/${fridgeId}/${contentId}`, {
       method: "DELETE",
       headers: {
+        Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
         "Content-Type": "application/json",
       },
     })
@@ -63,7 +75,12 @@ function Fridges({LOGGED_IN_USER}) {
   }
 
   function recommendRecipe(fridgeId) {
-    fetch(`/api/recipes/${fridgeId}`)
+    fetch(`/api/recipes/${fridgeId}`, {
+      headers: {
+        Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((recipe) => setRecommendedRecipe(recipe));
   }

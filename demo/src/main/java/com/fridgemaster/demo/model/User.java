@@ -30,6 +30,7 @@ public class User {
     @JsonManagedReference
     private Fridge fridge;
     private Role role;
+    private String login;
 
     public User(String username, String password) {
         this.username = username;

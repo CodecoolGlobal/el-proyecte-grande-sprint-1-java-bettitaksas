@@ -1,4 +1,5 @@
 package com.fridgemaster.demo.service;
+import com.fridgemaster.demo.dto.UserDTO;
 import com.fridgemaster.demo.model.Fridge;
 import com.fridgemaster.demo.model.User;
 import com.fridgemaster.demo.repository.FridgeRepository;
@@ -30,5 +31,17 @@ public class UserService {
     public Long loginUser(User user){
         User loggedInUser = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         return fridgeRepository.findFridgeByUser(loggedInUser).getId();
+    }
+    public Long loginUser(UserDTO userDTO){
+        User loggedInUser = userRepository.findByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());
+        return fridgeRepository.findFridgeByUser(loggedInUser).getId();
+    }
+
+    public UserDTO findByLogin(String login) {
+        User user = userRepository.findByUsername(login);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(user.getUsername());
+        userDTO.setPassword(user.getPassword());
+        return userDTO;
     }
 }

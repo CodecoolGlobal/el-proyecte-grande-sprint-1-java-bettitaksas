@@ -32,7 +32,6 @@ public class UsernameAndPasswordFilter extends UsernamePasswordAuthenticationFil
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             UserDTO userDTO = new ObjectMapper().readValue(request.getInputStream(), UserDTO.class);
-
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     userDTO.getUsername(),
                     userDTO.getPassword());
@@ -42,6 +41,8 @@ public class UsernameAndPasswordFilter extends UsernamePasswordAuthenticationFil
             throw new RuntimeException(e);
         }
     }
+
+
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
