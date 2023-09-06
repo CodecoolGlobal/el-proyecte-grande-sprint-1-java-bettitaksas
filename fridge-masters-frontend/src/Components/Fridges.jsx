@@ -87,6 +87,7 @@ function Fridges({LOGGED_IN_USER}) {
 
   function getRecipe() {
     if (recommendedRecipe) {
+      console.log(recommendedRecipe[0])
       return recommendedRecipe;
     }
     return []

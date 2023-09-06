@@ -68,7 +68,7 @@ public class RecipeService{
     }
 
     public Recipe getRecipeById(Long recipeId){
-        return recipeRepository.getById(recipeId);
+        return recipeRepository.getRecipeById(recipeId);
     }
     public Recipe recommendRecipe(Long fridgeId) throws NoSuchObjectException {
         return getRecipeUsingWorstConditionItem(fridgeId);
@@ -78,7 +78,6 @@ public class RecipeService{
         List<Item> fridgeContent = fridgeRepository.findById(fridgeId).get().getFridgeItems();
         recipes = orderByExpiringItems(recipes, fridgeContent, RecommendedRecipeNumConst.RECOMMENDED_RECIPE_COUNT);
         recipes = orderByRequiredItemCount(recipes, fridgeContent, RecommendedRecipeNumConst.RECOMMENDED_RECIPE_COUNT);
-
 
 
         return recipes;

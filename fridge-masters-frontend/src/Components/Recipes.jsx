@@ -7,7 +7,8 @@ function Recipes() {
     useEffect(() => {
         fetch(`/api/recipes`)
             .then((res) => res.json())
-            .then((data) => setRecipes(data));
+            .then((data) => {setRecipes(data)
+            console.log(data)});
     }, [update]);
     return (
         <div>

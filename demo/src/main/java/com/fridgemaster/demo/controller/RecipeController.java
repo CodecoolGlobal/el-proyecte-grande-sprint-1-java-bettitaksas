@@ -29,8 +29,8 @@ public class RecipeController {
     public List<Recipe> testRecommendationPrototype(@PathVariable Long fridgeId){
         return recipeService.recommendRecipePrototype(fridgeId);
     }
-    @GetMapping("/{recipeId}")
-    public Recipe getRecipe(@RequestParam Long recipeId){
+    @GetMapping("/placeholder/{recipeId}")
+    public Recipe getRecipe(@PathVariable Long recipeId){
         return recipeService.getRecipeById(recipeId);
     }
     @CrossOrigin(origins = "http://localhost:3000")

@@ -1,14 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-function RecommendedRecipe(){
+function RecommendedRecipe({LOGGED_IN_USER}){
     const {id} = useParams();
-    const [recipe, setRecipe] = useEffect(null);
+    const [recipe, setRecipe] = useState(null);
     useEffect(() => {
-        fetch(`/api/recipes/${id}`)
+        fetch(`/api/recipes/placeholder/${id}`, {
+            headers: {
+              Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
+              "Content-Type": "application/json",
+            },
+          })
         .then(res => res.json())
         .then(data => setRecipe(data))
-    })
-    return (
+    }, [])
+    return ( recipe ? 
+    <div>
 <div  className='recipe-box'>
                             <ul >
                                 <li>
@@ -29,7 +35,8 @@ function RecommendedRecipe(){
                                     </div>
                                 </li>
                             </ul>
-                        </div>    )
+                        </div> 
+                        </div>: <div>loading...</div>   )
 }
 
 export default RecommendedRecipe;

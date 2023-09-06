@@ -53,6 +53,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("api/user/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/recipes").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/recipe/placeholder/**").permitAll()
                         .anyRequest().authenticated())
         ;
         return http.build();

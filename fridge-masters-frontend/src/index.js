@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/recipe/:id",
-        element: <SingleRecipe />
+        element: <SingleRecipe LOGGED_IN_USER={LOGGED_IN_USER}/>
       }
     ],
   },
