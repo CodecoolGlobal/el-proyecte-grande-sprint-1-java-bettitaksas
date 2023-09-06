@@ -21,6 +21,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.Set;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -51,7 +53,10 @@ public class SecurityConfig {
         http
                 .csrf()
                 .disable()
-                .authorizeRequests(auth -> auth.requestMatchers("/**").permitAll())
+                .authorizeRequests(auth -> auth
+                        .requestMatchers("/api/user/**").permitAll()
+                        .requestMatchers("/api/fridges/**").hasAnyRole(Role.User.getRole(), Role.Premium_User.getRole(), Role.Admin.getRole())
+                )
                 .authenticationProvider(authenticationProvider());
         return http.build();
     }
