@@ -8,31 +8,49 @@ function Fridges({LOGGED_IN_USER}) {
   const [itemSelected, setItemSelected] = useState(null);
   const [recommendedRecipe, setRecommendedRecipe] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+
+
   function fetchInfo() {
+
+
+
     let fetchReqs = [
       fetch(`/api/items`, {
         headers: {
           Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
           "Content-Type": "application/json",
         },
-      }).then((res) => res.json()),
+      })
+      .then((res) => res.json()),
+
+
+
+
       fetch(`/api/fridges/${LOGGED_IN_USER[2]}`, {
         headers: {
           Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
           "Content-Type": "application/json",
         },
-      }).then((res) => res.json()),
+      })
+      .then((res) => res.json()),
+
     ];
     return Promise.all(fetchReqs);
   }
 
   useEffect(() => {
-    fetchInfo().then((info) => {
-      let [items, fridges] = info;
-      setFridgeContents([fridges]);
-      setItemTypes(items);
-    });
-  }, []);
+    if(LOGGED_IN_USER.length === 0) {
+      setErrorMessage('Authentication failed. Please, log in to see your fridge!');
+    } else {
+      fetchInfo().then((info) => {
+        let [items, fridges] = info;
+        setFridgeContents([fridges]);
+        setItemTypes(items);
+      });
+    }
+
+  }, [LOGGED_IN_USER]);
 
   function addHandler(fridgeId, itemSelected) {
     const formattedDate = selectedDate
@@ -93,6 +111,18 @@ function Fridges({LOGGED_IN_USER}) {
     return []
   }
   return (
+
+    errorMessage ? 
+    <div className="error">
+        <div className="message">
+          <p>{errorMessage}</p>
+          <div className="login-btn"><Link to = "/login">Log in!</Link></div>
+        </div> 
+        
+    </div>
+    
+    :
+
     <div className="fridge-page">
       {fridgeContents ? (
         <>
