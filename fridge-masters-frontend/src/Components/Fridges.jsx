@@ -41,7 +41,7 @@ function Fridges({LOGGED_IN_USER}) {
 
   useEffect(() => {
     if(LOGGED_IN_USER.length === 0) {
-      setErrorMessage('Authentication failed. Please check your credentials.');
+      setErrorMessage('Authentication failed. Please, log in to see your fridge!');
     } else {
       fetchInfo().then((info) => {
         let [items, fridges] = info;
@@ -112,7 +112,16 @@ function Fridges({LOGGED_IN_USER}) {
   }
   return (
 
-    errorMessage ? <p className="error">{errorMessage}</p> :
+    errorMessage ? 
+    <div className="error">
+        <div className="message">
+          <p>{errorMessage}</p>
+          <div className="login-btn"><Link to = "/login">Log in!</Link></div>
+        </div> 
+        
+    </div>
+    
+    :
 
     <div className="fridge-page">
       {fridgeContents ? (
