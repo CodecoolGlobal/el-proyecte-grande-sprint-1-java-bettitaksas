@@ -29,7 +29,7 @@ function Register() {
                             setRegistrationStatus(false);
                         }}
                     >
-                        <Link className='back_btn' to='/fridges'>Let's see my fridge</Link>
+                        <Link className='back_btn' to='/login'>Let's log in to see your fridge!</Link>
                     </button>
                 </div>
             </div>

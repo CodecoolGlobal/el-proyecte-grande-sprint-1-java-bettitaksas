@@ -1,4 +1,10 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 function Login({LOGGED_IN_USER}){
+  
+const [loginStatus, setLoginStatus] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch(`/api/user/login`, {
@@ -13,6 +19,8 @@ function Login({LOGGED_IN_USER}){
     LOGGED_IN_USER[2] = responseEntity.fridgeId;
     LOGGED_IN_USER[3] = responseEntity.token;
   });
+  setLoginStatus(true);
+  console.log("You logged in successfully!")
   };
   function handleUsername(username){
     LOGGED_IN_USER[0] = username;
@@ -21,7 +29,25 @@ function Login({LOGGED_IN_USER}){
     LOGGED_IN_USER[1] = password;
   }
 
-return(
+return loginStatus ? (
+  <div className='login'>
+      <div className='outer_container'>
+          <div className='feedback_box'>
+                  <h2>Congrats, you logged in successfully!</h2>
+              
+              
+              <button 
+                  onClick={() => {
+                    setLoginStatus(false);
+                  }}
+              >
+                   <Link className='back_btn' to='/fridges'>Let's see your fridge!</Link>
+              </button>
+          </div>
+      </div>
+  </div>
+) : (
+
 <section className="login">
       <div className="login_box">
         <div className="left">
