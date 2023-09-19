@@ -1,22 +1,22 @@
-import { useState, useEffect } from 'react';
-
-function Recipes() {
-    const [recipes, setRecipes] = useState(null);
-    const [update, setUpdate] = useState(0);
-
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+function RecommendedRecipe({LOGGED_IN_USER}){
+    const {id} = useParams();
+    const [recipe, setRecipe] = useState(null);
     useEffect(() => {
-        fetch(`/api/recipes`)
-            .then((res) => res.json())
-            .then((data) => {setRecipes(data)
-            console.log(data)});
-    }, [update]);
-    return (
-        <div>
-            {recipes ? (
-                <div className='recipes'>
-                    {recipes.map((recipe, index) => (
-                        <div key={index} className='recipe-box'>
-                            <ul key={index}>
+        fetch(`/api/recipes/placeholder/${id}`, {
+            headers: {
+              Authorization: `Bearer ${LOGGED_IN_USER[3]}`,
+              "Content-Type": "application/json",
+            },
+          })
+        .then(res => res.json())
+        .then(data => setRecipe(data))
+    }, [])
+    return ( recipe ? 
+    <div>
+<div  className='recipe-box'>
+                            <ul >
                                 <li>
                                   <h4>{recipe.name}</h4>
                                     <br />
@@ -35,14 +35,8 @@ function Recipes() {
                                     </div>
                                 </li>
                             </ul>
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <div>loading...</div>
-            )}
-        </div>
-    );
+                        </div> 
+                        </div>: <div>loading...</div>   )
 }
 
-export default Recipes;
+export default RecommendedRecipe;

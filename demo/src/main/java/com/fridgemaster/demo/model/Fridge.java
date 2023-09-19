@@ -1,19 +1,34 @@
 package com.fridgemaster.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Fridge {
-    private UUID id;
-    List<Item> fridgeItems;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    List<Item> fridgeItems = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "fridge")
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
 
-    public Fridge() {
-        id = UUID.randomUUID();
-        fridgeItems = new ArrayList<>();
-    }
-
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
@@ -24,9 +39,11 @@ public class Fridge {
     public void addItemToFridge(Item item){
         fridgeItems.add(item);
     }
-    public void deleteItemFromFridge(UUID id){
+    public void deleteItemFromFridge(Long id){
         fridgeItems.removeIf(c -> c.getId().equals(id));
     }
 
 
 }
+
+

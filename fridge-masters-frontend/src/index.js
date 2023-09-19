@@ -10,11 +10,15 @@ import Fridges from "./Components/Fridges";
 import Login from "./Components/Login";
 import MainPage from "./Components/MainPage";
 import Recipes from "./Components/Recipes";
+import Register from "./Components/Register";
+import { useState } from "react";
+import SingleRecipe from "./Components/SingleRecipe";
 
+let LOGGED_IN_USER = [];
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Header />,
+    element: <Header LOGGED_IN_USER ={LOGGED_IN_USER} />,
     errorElement: <ErrorElement />,
     
     children: [
@@ -24,15 +28,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/fridges",
-        element: <Fridges />,
+        element: <Fridges LOGGED_IN_USER ={LOGGED_IN_USER}/>,
       },
       {
         path: "/login",
-        element: <Login />,
+        element: <Login LOGGED_IN_USER ={LOGGED_IN_USER} />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
       {
         path: "/recipes",
         element: <Recipes/>
+      },
+      {
+        path: "/recipe/:id",
+        element: <SingleRecipe LOGGED_IN_USER={LOGGED_IN_USER}/>
       }
     ],
   },

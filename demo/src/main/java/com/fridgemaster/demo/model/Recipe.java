@@ -1,9 +1,21 @@
 package com.fridgemaster.demo.model;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@NoArgsConstructor
+@Entity
+@Getter
+@Setter
 public class Recipe {
-    private final String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private  String name;
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Item> ingredients;
     private String description;
 
@@ -11,6 +23,12 @@ public class Recipe {
         this.name = name;
         this.ingredients = new ArrayList<>();
         this.description = "";
+    }
+
+    public Recipe(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.ingredients = new ArrayList<>();
     }
 
     public void addIngredient(Item ingredient){

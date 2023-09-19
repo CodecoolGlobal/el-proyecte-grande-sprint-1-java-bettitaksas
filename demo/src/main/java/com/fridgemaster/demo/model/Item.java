@@ -1,18 +1,24 @@
 package com.fridgemaster.demo.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
-
+@Entity
 public final class Item {
-    private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private ItemType type;
     //private int weight;
     //private double cal;
     private LocalDate expirationDate;
 
     public Item( ItemType itemType, LocalDate expirationDate) {
-        this.id = UUID.randomUUID();
         this.type = itemType;
         //this.weight = weight;
         //this.cal = cal;
@@ -23,7 +29,10 @@ public final class Item {
         this.type = itemType;
     }
 
-    public UUID getId() {
+    public Item() {
+    }
+
+    public Long getId() {
         return id;
     }
 
