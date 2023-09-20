@@ -1,24 +1,35 @@
-#Customize this file to define your application's specific requirements and container configurations
+version: '3.2'
 
-version: '3'
 services:
-  postgres:
-    image: postgres
-    environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: ${username}
-      POSTGRES_PASSWORD: ${password}
-
   backend:
     build:
-      context: ./
+      context: . # Use an image built from the specified dockerfile in the backend directory.
+      dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
     depends_on:
-      - postgres
+      - postgresdb
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/fridge_master
-      SPRING_DATASOURCE_USERNAME: ${username}
-      SPRING_DATASOURCE_PASSWORD: ${password}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - backend-network
+
+  postgresdb:
+    image: postgres:13.1-alpine
+    container_name: postgresdb
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
     volumes:
-      - ./demo/src/main/resources/build/static:/app/static
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
