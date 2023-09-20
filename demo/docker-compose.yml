@@ -1,0 +1,24 @@
+#Customize this file to define your application's specific requirements and container configurations
+
+version: '3'
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: ${username}
+      POSTGRES_PASSWORD: ${password}
+
+  backend:
+    build:
+      context: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/fridge_master
+      SPRING_DATASOURCE_USERNAME: ${username}
+      SPRING_DATASOURCE_PASSWORD: ${password}
+    volumes:
+      - ./demo/src/main/resources/build/static:/app/static
