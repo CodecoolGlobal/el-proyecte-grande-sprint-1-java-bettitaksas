@@ -1,6 +1,8 @@
 package com.fridgemaster.demo.security;
 
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.DispatcherType;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,6 +21,8 @@ import javax.crypto.SecretKey;
 @Configuration
 @EnableWebSecurity()
 public class SecurityConfig {
+
+    //TODO beanify authenticationmanager,
 
     private final PasswordEncoder passwordEncoder;
     private final SecretKey secretKey = Keys.hmacShaKeyFor("zdtlD3JK56m6wTTgsNFhqzjqPzdtlD3JK56m6wTTgsNFhqzjqP".getBytes());
@@ -44,6 +48,9 @@ public class SecurityConfig {
                 .build();
     }
 */
+
+    //TODO add username and password filter and refactor login endpoint
+    //TODO authenticationmanager bean
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -52,7 +59,11 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("api/user/**").permitAll()
+                        .shouldFilterAllDispatcherTypes(false)
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers("/index.html", "/css/**","/js/**", "/media/**", "/").permitAll()
+                        .requestMatchers("/api/user/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/recipes").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/recipe/placeholder/**").permitAll()
                         .anyRequest().authenticated())
