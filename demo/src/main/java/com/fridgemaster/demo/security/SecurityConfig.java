@@ -1,6 +1,8 @@
 package com.fridgemaster.demo.security;
 
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.DispatcherType;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -33,17 +35,18 @@ public class SecurityConfig {
         this.authenticationManager = authenticationManager;
         this.authProvider = authProvider;
     }
-/*
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService)
-            throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder)
-                .and()
-                .build();
-    }
-*/
+
+    /*
+        @Bean
+        public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService)
+                throws Exception {
+            return http.getSharedObject(AuthenticationManagerBuilder.class)
+                    .userDetailsService(userDetailsService)
+                    .passwordEncoder(passwordEncoder)
+                    .and()
+                    .build();
+        }
+    */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -52,18 +55,23 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("api/user/**").permitAll()
+                        .shouldFilterAllDispatcherTypes(false)
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers("/index.html", "/css/**", "/js/**", "/media/**", "/").permitAll()
+                        .requestMatchers("/api/user/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/recipes").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/recipe/placeholder/**").permitAll()
                         .anyRequest().authenticated())
         ;
         return http.build();
     }
+
     @Bean
     AuthenticationProvider authenticationProvider() {
-       final DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-       daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-       daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-       return daoAuthenticationProvider;
+        final DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        return daoAuthenticationProvider;
     }
 }
