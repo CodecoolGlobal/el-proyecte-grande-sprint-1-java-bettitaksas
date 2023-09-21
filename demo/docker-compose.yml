@@ -10,7 +10,7 @@ services:
     depends_on:
       - postgresdb
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/fridge_master
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -23,7 +23,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=fridge_master
     volumes:
       - ./data:/var/lib/postgresql/data
     ports:
