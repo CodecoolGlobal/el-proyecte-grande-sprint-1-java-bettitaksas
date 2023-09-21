@@ -6,11 +6,13 @@ services:
       context: . # Use an image built from the specified dockerfile in the backend directory.
       dockerfile: Dockerfile
     ports:
-      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+      - "3001:3001" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    expose:
+      - "3001"
     depends_on:
       - postgresdb
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/fridge_master
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
